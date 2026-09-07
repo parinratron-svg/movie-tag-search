@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
@@ -51,7 +52,7 @@ function MovieCard({
     : null;
 
   return (
-    <article className="group">
+    <Link href={`/movies/${movie.id}`} className="group">
       <div className="relative aspect-[2/3] overflow-hidden rounded-sm bg-white/5">
         {posterUrl ? (
           <Image
@@ -88,6 +89,6 @@ function MovieCard({
           ))}
         </div>
       )}
-    </article>
+    </Link>
   );
 }

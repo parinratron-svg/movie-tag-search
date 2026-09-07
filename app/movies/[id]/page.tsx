@@ -113,7 +113,7 @@ export default async function MovieDetailPage({
   );
 
   const reviewsContent = (
-    <div>
+    <div key="reviews-tab">
       <ReviewForm movieId={movie.id} />
 
       <div className="mt-8 space-y-6">
