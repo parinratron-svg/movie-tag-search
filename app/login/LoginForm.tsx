@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Mail, Lock, Eye, EyeOff } from "lucide-react";
+import AuthLoadingOverlay from "../components/AuthLoadingOverlay";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -12,7 +13,8 @@ export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
-
+  const [showTransition, setShowTransition] = useState(false);
+  
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setSubmitting(true);
@@ -32,12 +34,16 @@ export default function LoginForm() {
       return;
     }
 
-    router.push("/");
-    router.refresh();
+    setShowTransition(true);
+    setTimeout(() => {
+      router.push("/");
+      router.refresh();
+    }, 1400);
   }
 
   return (
-    <div className="rounded-2xl border border-white/10 bg-[#15171C]/90 p-8 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.7)] backdrop-blur-xl">
+    <>
+      <div className="rounded-2xl border border-white/10 bg-[#15171C]/90 p-8 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.7)] backdrop-blur-xl">
       <div className="text-center">
         <h1 className="font-serif text-2xl tracking-tight text-[#F5F1E8]">
           Doo Arai Dee
@@ -117,6 +123,9 @@ export default function LoginForm() {
           สมัครสมาชิก
         </Link>
       </p>
-    </div>
+      </div>
+
+      {showTransition && <AuthLoadingOverlay />}
+    </>
   );
 }

@@ -84,3 +84,87 @@ html::-webkit-scrollbar-thumb:hover {
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+@keyframes logo-reveal {
+  0% {
+    opacity: 0;
+    transform: scale(0.7);
+    letter-spacing: -0.08em;
+    filter: blur(8px);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.08);
+    letter-spacing: 0.03em;
+    filter: blur(0px);
+  }
+  70% {
+    transform: scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    letter-spacing: 0em;
+    filter: blur(0px);
+  }
+}
+
+@keyframes icon-glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0px 0px rgba(232, 163, 61, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 40px 8px rgba(232, 163, 61, 0.5);
+  }
+}
+
+@keyframes bg-glow-expand {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  60% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0.25;
+    transform: scale(1.6);
+  }
+}
+
+@keyframes shine-sweep {
+  0% {
+    transform: translateX(-150%) skewX(-20deg);
+  }
+  100% {
+    transform: translateX(250%) skewX(-20deg);
+  }
+}
+
+@keyframes overlay-fade-out {
+  0%, 65% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.animate-logo-reveal {
+  animation: logo-reveal 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-icon-glow {
+  animation: icon-glow-pulse 1.6s ease-in-out infinite;
+}
+
+.animate-bg-glow {
+  animation: bg-glow-expand 1.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-shine-sweep {
+  animation: shine-sweep 1.3s ease-in-out 0.3s;
+}
+
+.animate-overlay-fade-out {
+  animation: overlay-fade-out 1.5s ease-in-out forwards;
+}

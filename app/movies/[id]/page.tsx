@@ -4,7 +4,8 @@ import { Star } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import ReviewForm from "./ReviewForm";
 import MovieTabs from "./MovieTabs";
-
+import { getCurrentUser } from "@/lib/session";
+import ReviewList from "./ReviewList";
 export const dynamic = "force-dynamic";
 
 export default async function MovieDetailPage({
@@ -14,12 +15,16 @@ export default async function MovieDetailPage({
 }) {
   const { id } = await params;
 
+  const currentUser = await getCurrentUser();
+
   const movie = await prisma.movie.findUnique({
     where: { id },
     include: {
       watchLinks: true,
       reviews: {
-        include: { user: { select: { name: true } } },
+        include: {
+          user: { select: { name: true, avatarUrl: true } },
+        },
         orderBy: { createdAt: "desc" },
       },
     },
@@ -115,35 +120,10 @@ export default async function MovieDetailPage({
   const reviewsContent = (
     <div key="reviews-tab">
       <ReviewForm movieId={movie.id} />
-
-      <div className="mt-8 space-y-6">
-        {movie.reviews.length === 0 && (
-          <p className="text-sm text-white/40">
-            ยังไม่มีใครรีวิวเรื่องนี้ เป็นคนแรกได้เลย
-          </p>
-        )}
-
-        {movie.reviews.map((review) => (
-          <article key={review.id} className="border-b border-white/5 pb-6">
-            <div className="flex items-center justify-between">
-              <p className="text-sm font-medium">{review.user.name}</p>
-              <div className="flex gap-0.5">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <Star
-                    key={i}
-                    className={`h-3.5 w-3.5 ${
-                      i < review.rating
-                        ? "fill-[#E8A33D] text-[#E8A33D]"
-                        : "text-white/20"
-                    }`}
-                  />
-                ))}
-              </div>
-            </div>
-            <p className="mt-2 text-sm text-white/70">{review.content}</p>
-          </article>
-        ))}
-      </div>
+      <ReviewList
+        reviews={movie.reviews}
+        currentUserId={currentUser?.id ?? null}
+      />
     </div>
   );
 
