@@ -14,7 +14,7 @@ async function main() {
   const genreMap = await fetchGenreMap();
 
   console.log("Fetching popular movies from TMDb (English)...");
-  const PAGES_TO_FETCH = 5;
+  const PAGES_TO_FETCH = 10;
   const englishPages = await Promise.all(
     Array.from({ length: PAGES_TO_FETCH }, (_, i) =>
       fetchPopularMovies(i + 1, "en-US")
