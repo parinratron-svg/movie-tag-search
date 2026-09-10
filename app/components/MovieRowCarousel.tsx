@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -17,19 +17,45 @@ type MovieCardData = {
 
 export default function MovieRowCarousel({
   movies,
+  autoScroll = false,
 }: {
   movies: MovieCardData[];
+  autoScroll?: boolean;
 }) {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const pausedRef = useRef(false);
 
   function scrollBy(amount: number) {
     scrollRef.current?.scrollBy({ left: amount, behavior: "smooth" });
   }
 
+  useEffect(() => {
+    if (!autoScroll) return;
+    const el = scrollRef.current;
+    if (!el) return;
+
+    const interval = setInterval(() => {
+      if (pausedRef.current) return;
+
+      const atEnd = el.scrollLeft + el.clientWidth >= el.scrollWidth - 5;
+      if (atEnd) {
+        el.scrollTo({ left: 0, behavior: "smooth" });
+      } else {
+        el.scrollBy({ left: 1.2, behavior: "auto" });
+      }
+    }, 16);
+
+    return () => clearInterval(interval);
+  }, [autoScroll]);
+
   if (movies.length === 0) return null;
 
   return (
-    <div className="group/row relative">
+    <div
+      className="group/row relative"
+      onMouseEnter={() => (pausedRef.current = true)}
+      onMouseLeave={() => (pausedRef.current = false)}
+    >
       <button
         onClick={() => scrollBy(-600)}
         aria-label="เลื่อนไปทางซ้าย"
@@ -41,7 +67,7 @@ export default function MovieRowCarousel({
       <div
         ref={scrollRef}
         className="scrollbar-hide flex gap-4 overflow-x-auto scroll-smooth px-6 pb-2 sm:px-10"
-        style={{ scrollSnapType: "x mandatory" }}
+        style={{ scrollSnapType: autoScroll ? "none" : "x mandatory" }}
       >
         {movies.map((movie) => (
           <MovieCard key={movie.id} movie={movie} />
