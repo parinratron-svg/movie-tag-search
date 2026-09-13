@@ -16,7 +16,19 @@ export default async function SearchPage({
   const { q } = await searchParams;
   const query = q?.trim() ?? "";
 
-  const allMovies = await prisma.movie.findMany();
+  const allMovies = await prisma.movie.findMany({
+    select: {
+      id: true,
+      title: true,
+      overview: true,
+      posterPath: true,
+      releaseYear: true,
+      voteAverage: true,
+      genres: true,
+      tags: true,
+      trailerKey: true,
+    },
+  });
   const results = query ? searchMovies(query, allMovies) : [];
 
   const popularPicks = [...allMovies]

@@ -32,7 +32,7 @@ export default function HeroCarousel({ movies }: { movies: MovieCardData[] }) {
       <div className="relative h-[380px] w-full sm:h-[480px]">
         {movies.map((movie, i) => {
           const backdropUrl = movie.posterPath
-            ? `https://image.tmdb.org/t/p/original${movie.posterPath}`
+            ? `https://image.tmdb.org/t/p/w1280${movie.posterPath}`
             : null;
 
           return (
@@ -47,6 +47,7 @@ export default function HeroCarousel({ movies }: { movies: MovieCardData[] }) {
                   src={backdropUrl}
                   alt={movie.title}
                   fill
+                  sizes="100vw"
                   priority={i === 0}
                   className={`object-cover transition-transform duration-[6000ms] ease-linear ${
                     i === active ? "scale-110" : "scale-100"

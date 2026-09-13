@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import { redirect } from "next/navigation";
-import { Star } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/session";
 
@@ -13,7 +12,17 @@ export default async function HistoryPage() {
 
   const views = await prisma.viewHistory.findMany({
     where: { userId: user.id },
-    include: { movie: true },
+    select: {
+      movieId: true,
+      viewedAt: true,
+      movie: {
+        select: {
+          id: true,
+          title: true,
+          posterPath: true,
+        },
+      },
+    },
     orderBy: { viewedAt: "desc" },
     take: 50,
   });

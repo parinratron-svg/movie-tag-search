@@ -7,6 +7,13 @@ export const dynamic = "force-dynamic";
 export default async function MoviesPage() {
   const movies = await prisma.movie.findMany({
     orderBy: { title: "asc" },
+    select: {
+      id: true,
+      title: true,
+      posterPath: true,
+      releaseYear: true,
+      tags: true,
+    },
   });
 
   return (

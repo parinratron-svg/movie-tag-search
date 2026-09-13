@@ -20,10 +20,28 @@ export default async function MovieDetailPage({
 
   const movie = await prisma.movie.findUnique({
     where: { id },
-    include: {
-      watchLinks: true,
+    select: {
+      id: true,
+      title: true,
+      overview: true,
+      posterPath: true,
+      releaseYear: true,
+      voteAverage: true,
+      genres: true,
+      tags: true,
+      trailerKey: true,
+      director: true,
+      cast: true,
+      watchLinks: {
+        select: { id: true, platform: true, url: true },
+      },
       reviews: {
-        include: {
+        select: {
+          id: true,
+          content: true,
+          rating: true,
+          userId: true,
+          createdAt: true,
           user: { select: { name: true, avatarUrl: true } },
         },
         orderBy: { createdAt: "desc" },

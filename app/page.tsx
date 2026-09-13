@@ -15,9 +15,22 @@ export default async function HomePage({
 }) {
   const { genre } = await searchParams;
 
-  const allMovies = await prisma.movie.findMany({
-    orderBy: { voteAverage: "desc" },
-  });
+  const [allMovies, currentUser] = await Promise.all([
+    prisma.movie.findMany({
+      orderBy: { voteAverage: "desc" },
+      select: {
+        id: true,
+        title: true,
+        overview: true,
+        posterPath: true,
+        releaseYear: true,
+        voteAverage: true,
+        genres: true,
+        trailerKey: true,
+      },
+    }),
+    getCurrentUser(),
+  ]);
 
   const genreSet = new Set<string>();
   allMovies.forEach((m) => m.genres.forEach((g) => genreSet.add(g)));
@@ -28,7 +41,6 @@ export default async function HomePage({
     : allMovies;
 
   const heroMovies = allMovies.slice(0, 5);
-  const currentUser = await getCurrentUser();
   const favoriteGenres = currentUser
     ? await getFavoriteGenres(currentUser.id)
     : [];

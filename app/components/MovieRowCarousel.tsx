@@ -86,7 +86,6 @@ export default function MovieRowCarousel({
 }
 
 function MovieCard({ movie }: { movie: MovieCardData }) {
-  const [showTrailer, setShowTrailer] = useState(false);
   const [trailerReady, setTrailerReady] = useState(false);
   const enterTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const readyTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -94,7 +93,6 @@ function MovieCard({ movie }: { movie: MovieCardData }) {
   function handleMouseEnter() {
     if (!movie.trailerKey) return;
     enterTimeoutRef.current = setTimeout(() => {
-      setShowTrailer(true);
       readyTimeoutRef.current = setTimeout(() => setTrailerReady(true), 700);
     }, 500);
   }
@@ -102,7 +100,6 @@ function MovieCard({ movie }: { movie: MovieCardData }) {
   function handleMouseLeave() {
     if (enterTimeoutRef.current) clearTimeout(enterTimeoutRef.current);
     if (readyTimeoutRef.current) clearTimeout(readyTimeoutRef.current);
-    setShowTrailer(false);
     setTrailerReady(false);
   }
 
