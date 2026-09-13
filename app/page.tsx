@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
+import { getCurrentUser } from "@/lib/session";
+import { getFavoriteGenres } from "@/lib/personalization";
 import HeroCarousel from "./components/HeroCarousel";
 import GenreTabs from "./components/GenreTabs";
 import MovieRowCarousel from "./components/MovieRowCarousel";
@@ -26,7 +28,21 @@ export default async function HomePage({
     : allMovies;
 
   const heroMovies = allMovies.slice(0, 5);
-  const recommended = filteredMovies.slice(0, 20);
+  const currentUser = await getCurrentUser();
+  const favoriteGenres = currentUser
+    ? await getFavoriteGenres(currentUser.id)
+    : [];
+
+  const recommended =
+    !genre && favoriteGenres.length > 0
+      ? [...filteredMovies]
+          .sort((a, b) => {
+            const aScore = a.genres.filter((g) => favoriteGenres.includes(g)).length;
+            const bScore = b.genres.filter((g) => favoriteGenres.includes(g)).length;
+            return bScore - aScore;
+          })
+          .slice(0, 20)
+      : filteredMovies.slice(0, 20);
   const newest = [...filteredMovies]
     .sort((a, b) => (b.releaseYear ?? 0) - (a.releaseYear ?? 0))
     .slice(0, 20);

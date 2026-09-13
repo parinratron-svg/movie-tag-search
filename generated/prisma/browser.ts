@@ -37,3 +37,8 @@ export type WatchLink = Prisma.WatchLinkModel
  * 
  */
 export type Review = Prisma.ReviewModel
+/**
+ * Model ViewHistory
+ * 
+ */
+export type ViewHistory = Prisma.ViewHistoryModel

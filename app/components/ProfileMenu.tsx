@@ -4,7 +4,13 @@ import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { User as UserIcon, Settings, LogOut, ChevronDown } from "lucide-react";
+import {
+  User as UserIcon,
+  Settings,
+  Clock,
+  LogOut,
+  ChevronDown,
+} from "lucide-react";
 
 export default function ProfileMenu({
   name,
@@ -70,10 +76,19 @@ export default function ProfileMenu({
             <Settings className="h-4 w-4" />
             ตั้งค่า
           </Link>
+          <Link
+            href="/profile/history"
+            onClick={() => setOpen(false)}
+            className="flex items-center gap-2.5 px-4 py-3 text-sm text-white/80 hover:bg-white/5"
+          >
+            <Clock className="h-4 w-4" />
+            ประวัติการดู
+          </Link>
           <button
             onClick={handleLogout}
             className="flex w-full items-center gap-2.5 border-t border-white/10 px-4 py-3 text-left text-sm text-red-400 hover:bg-white/5"
           >
+            
             <LogOut className="h-4 w-4" />
             ออกจากระบบ
           </button>

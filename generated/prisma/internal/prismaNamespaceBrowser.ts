@@ -52,7 +52,8 @@ export const ModelName = {
   User: 'User',
   Movie: 'Movie',
   WatchLink: 'WatchLink',
-  Review: 'Review'
+  Review: 'Review',
+  ViewHistory: 'ViewHistory'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -122,6 +123,16 @@ export const ReviewScalarFieldEnum = {
 } as const
 
 export type ReviewScalarFieldEnum = (typeof ReviewScalarFieldEnum)[keyof typeof ReviewScalarFieldEnum]
+
+
+export const ViewHistoryScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  movieId: 'movieId',
+  viewedAt: 'viewedAt'
+} as const
+
+export type ViewHistoryScalarFieldEnum = (typeof ViewHistoryScalarFieldEnum)[keyof typeof ViewHistoryScalarFieldEnum]
 
 
 export const SortOrder = {

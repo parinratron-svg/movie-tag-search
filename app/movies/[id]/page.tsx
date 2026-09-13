@@ -6,6 +6,7 @@ import ReviewForm from "./ReviewForm";
 import MovieTabs from "./MovieTabs";
 import { getCurrentUser } from "@/lib/session";
 import ReviewList from "./ReviewList";
+import RecordView from "./RecordView";
 export const dynamic = "force-dynamic";
 
 export default async function MovieDetailPage({
@@ -128,7 +129,9 @@ export default async function MovieDetailPage({
   );
 
   return (
-    <main className="min-h-screen bg-[#0F1115] text-[#F5F1E8]">
+    <>
+      <RecordView movieId={movie.id} />
+      <main className="min-h-screen bg-[#0F1115] text-[#F5F1E8]">
       <div className="mx-auto max-w-4xl px-6 py-10 sm:px-10">
         <div className="grid gap-8 sm:grid-cols-[240px_1fr]">
           <div className="relative aspect-2/3 overflow-hidden rounded-lg bg-white/5 shadow-xl shadow-black/50">
@@ -189,6 +192,7 @@ export default async function MovieDetailPage({
           />
         </div>
       </div>
-    </main>
+      </main>
+    </>
   );
 }

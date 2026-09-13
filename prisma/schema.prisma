@@ -15,14 +15,15 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
+  id        String       @id @default(cuid())
+  email     String       @unique
   password  String
   name      String
-  role      Role     @default(USER)
-  avatarUrl String?  @db.Text
+  role      Role         @default(USER)
+  avatarUrl String?      @db.Text
   reviews   Review[]
-  createdAt DateTime @default(now())
+  views     ViewHistory[]
+  createdAt DateTime     @default(now())
 }
 
 enum Role {
@@ -31,8 +32,8 @@ enum Role {
 }
 
 model Movie {
-  id          String      @id @default(cuid())
-  tmdbId      Int         @unique
+  id          String        @id @default(cuid())
+  tmdbId      Int           @unique
   title       String
   overview    String
   posterPath  String?
@@ -45,6 +46,7 @@ model Movie {
   cast        String[]
   watchLinks  WatchLink[]
   reviews     Review[]
+  views       ViewHistory[]
 }
 
 model WatchLink {
@@ -64,4 +66,14 @@ model Review {
   movie     Movie    @relation(fields: [movieId], references: [id])
   movieId   String
   createdAt DateTime @default(now())
+}
+model ViewHistory {
+  id        String   @id @default(cuid())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  movie     Movie    @relation(fields: [movieId], references: [id])
+  movieId   String
+  viewedAt  DateTime @default(now())
+
+  @@index([userId, viewedAt])
 }
