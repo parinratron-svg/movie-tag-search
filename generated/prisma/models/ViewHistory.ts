@@ -189,6 +189,7 @@ export type ViewHistoryOrderByWithRelationInput = {
 
 export type ViewHistoryWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  userId_movieId?: Prisma.ViewHistoryUserIdMovieIdCompoundUniqueInput
   AND?: Prisma.ViewHistoryWhereInput | Prisma.ViewHistoryWhereInput[]
   OR?: Prisma.ViewHistoryWhereInput[]
   NOT?: Prisma.ViewHistoryWhereInput | Prisma.ViewHistoryWhereInput[]
@@ -197,7 +198,7 @@ export type ViewHistoryWhereUniqueInput = Prisma.AtLeast<{
   viewedAt?: Prisma.DateTimeFilter<"ViewHistory"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   movie?: Prisma.XOR<Prisma.MovieScalarRelationFilter, Prisma.MovieWhereInput>
-}, "id">
+}, "id" | "userId_movieId">
 
 export type ViewHistoryOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -274,6 +275,11 @@ export type ViewHistoryListRelationFilter = {
 
 export type ViewHistoryOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type ViewHistoryUserIdMovieIdCompoundUniqueInput = {
+  userId: string
+  movieId: string
 }
 
 export type ViewHistoryCountOrderByAggregateInput = {

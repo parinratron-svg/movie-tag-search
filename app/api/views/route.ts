@@ -5,7 +5,6 @@ import { getCurrentUser } from "@/lib/session";
 export async function POST(request: Request) {
   const user = await getCurrentUser();
   if (!user) {
-    // ผู้ใช้ที่ไม่ได้ล็อกอิน ไม่บันทึกประวัติ แต่ไม่ error เพราะไม่ใช่การกระทำที่บังคับ
     return NextResponse.json({ skipped: true });
   }
 
@@ -14,9 +13,33 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "ต้องระบุ movieId" }, { status: 400 });
   }
 
-  await prisma.viewHistory.create({
-    data: { userId: user.id, movieId },
+  const movie = await prisma.movie.findUnique({
+    where: { id: movieId },
+    select: { id: true },
   });
+
+  if (!movie) {
+    return NextResponse.json({ error: "ไม่พบหนังนี้" }, { status: 404 });
+  }
+
+  const existing = await prisma.viewHistory.findFirst({
+    where: {
+      userId: user.id,
+      movieId,
+    },
+    select: { id: true },
+  });
+
+  if (existing) {
+    await prisma.viewHistory.update({
+      where: { id: existing.id },
+      data: { viewedAt: new Date() },
+    });
+  } else {
+    await prisma.viewHistory.create({
+      data: { userId: user.id, movieId },
+    });
+  }
 
   return NextResponse.json({ success: true });
 }

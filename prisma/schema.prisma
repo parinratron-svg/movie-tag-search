@@ -44,17 +44,8 @@ model Movie {
   trailerKey  String?
   director    String?
   cast        String[]
-  watchLinks  WatchLink[]
   reviews     Review[]
   views       ViewHistory[]
-}
-
-model WatchLink {
-  id       String @id @default(cuid())
-  platform String
-  url      String
-  movie    Movie  @relation(fields: [movieId], references: [id])
-  movieId  String
 }
 
 model Review {
@@ -68,12 +59,13 @@ model Review {
   createdAt DateTime @default(now())
 }
 model ViewHistory {
-  id        String   @id @default(cuid())
-  user      User     @relation(fields: [userId], references: [id])
-  userId    String
-  movie     Movie    @relation(fields: [movieId], references: [id])
-  movieId   String
-  viewedAt  DateTime @default(now())
+  id       String   @id @default(cuid())
+  user     User     @relation(fields: [userId], references: [id])
+  userId   String
+  movie    Movie    @relation(fields: [movieId], references: [id])
+  movieId  String
+  viewedAt DateTime @default(now())
 
+  @@unique([userId, movieId])
   @@index([userId, viewedAt])
 }

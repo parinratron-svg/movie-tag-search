@@ -392,7 +392,6 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 export const ModelName = {
   User: 'User',
   Movie: 'Movie',
-  WatchLink: 'WatchLink',
   Review: 'Review',
   ViewHistory: 'ViewHistory'
 } as const
@@ -410,7 +409,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "movie" | "watchLink" | "review" | "viewHistory"
+    modelProps: "user" | "movie" | "review" | "viewHistory"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -559,80 +558,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.MovieCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.MovieCountAggregateOutputType> | number
-        }
-      }
-    }
-    WatchLink: {
-      payload: Prisma.$WatchLinkPayload<ExtArgs>
-      fields: Prisma.WatchLinkFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.WatchLinkFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$WatchLinkPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.WatchLinkFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$WatchLinkPayload>
-        }
-        findFirst: {
-          args: Prisma.WatchLinkFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$WatchLinkPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.WatchLinkFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$WatchLinkPayload>
-        }
-        findMany: {
-          args: Prisma.WatchLinkFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$WatchLinkPayload>[]
-        }
-        create: {
-          args: Prisma.WatchLinkCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$WatchLinkPayload>
-        }
-        createMany: {
-          args: Prisma.WatchLinkCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.WatchLinkCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$WatchLinkPayload>[]
-        }
-        delete: {
-          args: Prisma.WatchLinkDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$WatchLinkPayload>
-        }
-        update: {
-          args: Prisma.WatchLinkUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$WatchLinkPayload>
-        }
-        deleteMany: {
-          args: Prisma.WatchLinkDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.WatchLinkUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.WatchLinkUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$WatchLinkPayload>[]
-        }
-        upsert: {
-          args: Prisma.WatchLinkUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$WatchLinkPayload>
-        }
-        aggregate: {
-          args: Prisma.WatchLinkAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateWatchLink>
-        }
-        groupBy: {
-          args: Prisma.WatchLinkGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.WatchLinkGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.WatchLinkCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.WatchLinkCountAggregateOutputType> | number
         }
       }
     }
@@ -854,16 +779,6 @@ export const MovieScalarFieldEnum = {
 export type MovieScalarFieldEnum = (typeof MovieScalarFieldEnum)[keyof typeof MovieScalarFieldEnum]
 
 
-export const WatchLinkScalarFieldEnum = {
-  id: 'id',
-  platform: 'platform',
-  url: 'url',
-  movieId: 'movieId'
-} as const
-
-export type WatchLinkScalarFieldEnum = (typeof WatchLinkScalarFieldEnum)[keyof typeof WatchLinkScalarFieldEnum]
-
-
 export const ReviewScalarFieldEnum = {
   id: 'id',
   content: 'content',
@@ -1074,7 +989,6 @@ export interface PrismaClientOptions {
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
   movie?: Prisma.MovieOmit
-  watchLink?: Prisma.WatchLinkOmit
   review?: Prisma.ReviewOmit
   viewHistory?: Prisma.ViewHistoryOmit
 }

@@ -10,7 +10,6 @@
  */
 export type * from './models/User'
 export type * from './models/Movie'
-export type * from './models/WatchLink'
 export type * from './models/Review'
 export type * from './models/ViewHistory'
 export type * from './commonInputTypes'

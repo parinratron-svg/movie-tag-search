@@ -32,9 +32,6 @@ export default async function MovieDetailPage({
       trailerKey: true,
       director: true,
       cast: true,
-      watchLinks: {
-        select: { id: true, platform: true, url: true },
-      },
       reviews: {
         select: {
           id: true,
@@ -87,24 +84,6 @@ export default async function MovieDetailPage({
         </div>
       )}
 
-      {movie.watchLinks.length > 0 && (
-        <div className="mt-6">
-          <p className="text-sm text-white/50">ดูได้ที่</p>
-          <div className="mt-2 flex flex-wrap gap-2">
-            {movie.watchLinks.map((link) => (
-              <a
-                key={link.id}
-                href={link.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="rounded-lg border border-white/15 px-3 py-1.5 text-sm hover:border-[#E8A33D] hover:text-[#E8A33D]"
-              >
-                {link.platform}
-              </a>
-            ))}
-          </div>
-        </div>
-      )}
     </div>
   );
 

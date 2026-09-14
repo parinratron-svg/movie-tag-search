@@ -51,7 +51,6 @@ export const AnyNull = runtime.objectEnumValues.instances.AnyNull
 export const ModelName = {
   User: 'User',
   Movie: 'Movie',
-  WatchLink: 'WatchLink',
   Review: 'Review',
   ViewHistory: 'ViewHistory'
 } as const
@@ -101,16 +100,6 @@ export const MovieScalarFieldEnum = {
 } as const
 
 export type MovieScalarFieldEnum = (typeof MovieScalarFieldEnum)[keyof typeof MovieScalarFieldEnum]
-
-
-export const WatchLinkScalarFieldEnum = {
-  id: 'id',
-  platform: 'platform',
-  url: 'url',
-  movieId: 'movieId'
-} as const
-
-export type WatchLinkScalarFieldEnum = (typeof WatchLinkScalarFieldEnum)[keyof typeof WatchLinkScalarFieldEnum]
 
 
 export const ReviewScalarFieldEnum = {
