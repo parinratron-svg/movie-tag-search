@@ -140,7 +140,6 @@ export default async function AdminPage() {
   // 6. All Movies
   const movies = await prisma.movie.findMany({
     orderBy: { tmdbId: "desc" },
-    take: 50,
     select: {
       id: true,
       title: true,

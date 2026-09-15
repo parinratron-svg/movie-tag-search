@@ -267,7 +267,7 @@ function ReviewCard({
               <p className="font-semibold text-[#E8A33D] flex items-center gap-1">
                 <Clock className="h-3.5 w-3.5" /> ข้อความใหม่ที่ส่งขอแก้ไข (รออนุมัติ):
               </p>
-              <p className="mt-1 text-white/80 italic">"{review.pendingContent}"</p>
+              <p className="mt-1 text-white/80 italic">&quot;{review.pendingContent}&quot;</p>
             </div>
           )}
         </div>

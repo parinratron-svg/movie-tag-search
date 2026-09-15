@@ -202,6 +202,7 @@ export type UserWhereInput = {
   views?: Prisma.ViewHistoryListRelationFilter
   watchlist?: Prisma.WatchlistListRelationFilter
   clicks?: Prisma.ProviderClickListRelationFilter
+  favorites?: Prisma.FavoriteListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -216,6 +217,7 @@ export type UserOrderByWithRelationInput = {
   views?: Prisma.ViewHistoryOrderByRelationAggregateInput
   watchlist?: Prisma.WatchlistOrderByRelationAggregateInput
   clicks?: Prisma.ProviderClickOrderByRelationAggregateInput
+  favorites?: Prisma.FavoriteOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -233,6 +235,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   views?: Prisma.ViewHistoryListRelationFilter
   watchlist?: Prisma.WatchlistListRelationFilter
   clicks?: Prisma.ProviderClickListRelationFilter
+  favorites?: Prisma.FavoriteListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -273,6 +276,7 @@ export type UserCreateInput = {
   views?: Prisma.ViewHistoryCreateNestedManyWithoutUserInput
   watchlist?: Prisma.WatchlistCreateNestedManyWithoutUserInput
   clicks?: Prisma.ProviderClickCreateNestedManyWithoutUserInput
+  favorites?: Prisma.FavoriteCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -287,6 +291,7 @@ export type UserUncheckedCreateInput = {
   views?: Prisma.ViewHistoryUncheckedCreateNestedManyWithoutUserInput
   watchlist?: Prisma.WatchlistUncheckedCreateNestedManyWithoutUserInput
   clicks?: Prisma.ProviderClickUncheckedCreateNestedManyWithoutUserInput
+  favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -301,6 +306,7 @@ export type UserUpdateInput = {
   views?: Prisma.ViewHistoryUpdateManyWithoutUserNestedInput
   watchlist?: Prisma.WatchlistUpdateManyWithoutUserNestedInput
   clicks?: Prisma.ProviderClickUpdateManyWithoutUserNestedInput
+  favorites?: Prisma.FavoriteUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -315,6 +321,7 @@ export type UserUncheckedUpdateInput = {
   views?: Prisma.ViewHistoryUncheckedUpdateManyWithoutUserNestedInput
   watchlist?: Prisma.WatchlistUncheckedUpdateManyWithoutUserNestedInput
   clicks?: Prisma.ProviderClickUncheckedUpdateManyWithoutUserNestedInput
+  favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -403,6 +410,20 @@ export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
 }
 
+export type UserCreateNestedOneWithoutFavoritesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutFavoritesInput, Prisma.UserUncheckedCreateWithoutFavoritesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFavoritesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutFavoritesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutFavoritesInput, Prisma.UserUncheckedCreateWithoutFavoritesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFavoritesInput
+  upsert?: Prisma.UserUpsertWithoutFavoritesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutFavoritesInput, Prisma.UserUpdateWithoutFavoritesInput>, Prisma.UserUncheckedUpdateWithoutFavoritesInput>
+}
+
 export type UserCreateNestedOneWithoutReviewsInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutReviewsInput, Prisma.UserUncheckedCreateWithoutReviewsInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutReviewsInput
@@ -461,6 +482,78 @@ export type UserUpdateOneWithoutClicksNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutClicksInput, Prisma.UserUpdateWithoutClicksInput>, Prisma.UserUncheckedUpdateWithoutClicksInput>
 }
 
+export type UserCreateWithoutFavoritesInput = {
+  id?: string
+  email: string
+  password: string
+  name: string
+  role?: $Enums.Role
+  avatarUrl?: string | null
+  createdAt?: Date | string
+  reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
+  views?: Prisma.ViewHistoryCreateNestedManyWithoutUserInput
+  watchlist?: Prisma.WatchlistCreateNestedManyWithoutUserInput
+  clicks?: Prisma.ProviderClickCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutFavoritesInput = {
+  id?: string
+  email: string
+  password: string
+  name: string
+  role?: $Enums.Role
+  avatarUrl?: string | null
+  createdAt?: Date | string
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
+  views?: Prisma.ViewHistoryUncheckedCreateNestedManyWithoutUserInput
+  watchlist?: Prisma.WatchlistUncheckedCreateNestedManyWithoutUserInput
+  clicks?: Prisma.ProviderClickUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutFavoritesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutFavoritesInput, Prisma.UserUncheckedCreateWithoutFavoritesInput>
+}
+
+export type UserUpsertWithoutFavoritesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutFavoritesInput, Prisma.UserUncheckedUpdateWithoutFavoritesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutFavoritesInput, Prisma.UserUncheckedCreateWithoutFavoritesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutFavoritesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutFavoritesInput, Prisma.UserUncheckedUpdateWithoutFavoritesInput>
+}
+
+export type UserUpdateWithoutFavoritesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
+  views?: Prisma.ViewHistoryUpdateManyWithoutUserNestedInput
+  watchlist?: Prisma.WatchlistUpdateManyWithoutUserNestedInput
+  clicks?: Prisma.ProviderClickUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutFavoritesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
+  views?: Prisma.ViewHistoryUncheckedUpdateManyWithoutUserNestedInput
+  watchlist?: Prisma.WatchlistUncheckedUpdateManyWithoutUserNestedInput
+  clicks?: Prisma.ProviderClickUncheckedUpdateManyWithoutUserNestedInput
+}
+
 export type UserCreateWithoutReviewsInput = {
   id?: string
   email: string
@@ -472,6 +565,7 @@ export type UserCreateWithoutReviewsInput = {
   views?: Prisma.ViewHistoryCreateNestedManyWithoutUserInput
   watchlist?: Prisma.WatchlistCreateNestedManyWithoutUserInput
   clicks?: Prisma.ProviderClickCreateNestedManyWithoutUserInput
+  favorites?: Prisma.FavoriteCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutReviewsInput = {
@@ -485,6 +579,7 @@ export type UserUncheckedCreateWithoutReviewsInput = {
   views?: Prisma.ViewHistoryUncheckedCreateNestedManyWithoutUserInput
   watchlist?: Prisma.WatchlistUncheckedCreateNestedManyWithoutUserInput
   clicks?: Prisma.ProviderClickUncheckedCreateNestedManyWithoutUserInput
+  favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutReviewsInput = {
@@ -514,6 +609,7 @@ export type UserUpdateWithoutReviewsInput = {
   views?: Prisma.ViewHistoryUpdateManyWithoutUserNestedInput
   watchlist?: Prisma.WatchlistUpdateManyWithoutUserNestedInput
   clicks?: Prisma.ProviderClickUpdateManyWithoutUserNestedInput
+  favorites?: Prisma.FavoriteUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReviewsInput = {
@@ -527,6 +623,7 @@ export type UserUncheckedUpdateWithoutReviewsInput = {
   views?: Prisma.ViewHistoryUncheckedUpdateManyWithoutUserNestedInput
   watchlist?: Prisma.WatchlistUncheckedUpdateManyWithoutUserNestedInput
   clicks?: Prisma.ProviderClickUncheckedUpdateManyWithoutUserNestedInput
+  favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutViewsInput = {
@@ -540,6 +637,7 @@ export type UserCreateWithoutViewsInput = {
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   watchlist?: Prisma.WatchlistCreateNestedManyWithoutUserInput
   clicks?: Prisma.ProviderClickCreateNestedManyWithoutUserInput
+  favorites?: Prisma.FavoriteCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutViewsInput = {
@@ -553,6 +651,7 @@ export type UserUncheckedCreateWithoutViewsInput = {
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   watchlist?: Prisma.WatchlistUncheckedCreateNestedManyWithoutUserInput
   clicks?: Prisma.ProviderClickUncheckedCreateNestedManyWithoutUserInput
+  favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutViewsInput = {
@@ -582,6 +681,7 @@ export type UserUpdateWithoutViewsInput = {
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   watchlist?: Prisma.WatchlistUpdateManyWithoutUserNestedInput
   clicks?: Prisma.ProviderClickUpdateManyWithoutUserNestedInput
+  favorites?: Prisma.FavoriteUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutViewsInput = {
@@ -595,6 +695,7 @@ export type UserUncheckedUpdateWithoutViewsInput = {
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   watchlist?: Prisma.WatchlistUncheckedUpdateManyWithoutUserNestedInput
   clicks?: Prisma.ProviderClickUncheckedUpdateManyWithoutUserNestedInput
+  favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutWatchlistInput = {
@@ -608,6 +709,7 @@ export type UserCreateWithoutWatchlistInput = {
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   views?: Prisma.ViewHistoryCreateNestedManyWithoutUserInput
   clicks?: Prisma.ProviderClickCreateNestedManyWithoutUserInput
+  favorites?: Prisma.FavoriteCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutWatchlistInput = {
@@ -621,6 +723,7 @@ export type UserUncheckedCreateWithoutWatchlistInput = {
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   views?: Prisma.ViewHistoryUncheckedCreateNestedManyWithoutUserInput
   clicks?: Prisma.ProviderClickUncheckedCreateNestedManyWithoutUserInput
+  favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutWatchlistInput = {
@@ -650,6 +753,7 @@ export type UserUpdateWithoutWatchlistInput = {
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   views?: Prisma.ViewHistoryUpdateManyWithoutUserNestedInput
   clicks?: Prisma.ProviderClickUpdateManyWithoutUserNestedInput
+  favorites?: Prisma.FavoriteUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutWatchlistInput = {
@@ -663,6 +767,7 @@ export type UserUncheckedUpdateWithoutWatchlistInput = {
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   views?: Prisma.ViewHistoryUncheckedUpdateManyWithoutUserNestedInput
   clicks?: Prisma.ProviderClickUncheckedUpdateManyWithoutUserNestedInput
+  favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutClicksInput = {
@@ -676,6 +781,7 @@ export type UserCreateWithoutClicksInput = {
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   views?: Prisma.ViewHistoryCreateNestedManyWithoutUserInput
   watchlist?: Prisma.WatchlistCreateNestedManyWithoutUserInput
+  favorites?: Prisma.FavoriteCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutClicksInput = {
@@ -689,6 +795,7 @@ export type UserUncheckedCreateWithoutClicksInput = {
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   views?: Prisma.ViewHistoryUncheckedCreateNestedManyWithoutUserInput
   watchlist?: Prisma.WatchlistUncheckedCreateNestedManyWithoutUserInput
+  favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutClicksInput = {
@@ -718,6 +825,7 @@ export type UserUpdateWithoutClicksInput = {
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   views?: Prisma.ViewHistoryUpdateManyWithoutUserNestedInput
   watchlist?: Prisma.WatchlistUpdateManyWithoutUserNestedInput
+  favorites?: Prisma.FavoriteUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutClicksInput = {
@@ -731,6 +839,7 @@ export type UserUncheckedUpdateWithoutClicksInput = {
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   views?: Prisma.ViewHistoryUncheckedUpdateManyWithoutUserNestedInput
   watchlist?: Prisma.WatchlistUncheckedUpdateManyWithoutUserNestedInput
+  favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -743,6 +852,7 @@ export type UserCountOutputType = {
   views: number
   watchlist: number
   clicks: number
+  favorites: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -750,6 +860,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   views?: boolean | UserCountOutputTypeCountViewsArgs
   watchlist?: boolean | UserCountOutputTypeCountWatchlistArgs
   clicks?: boolean | UserCountOutputTypeCountClicksArgs
+  favorites?: boolean | UserCountOutputTypeCountFavoritesArgs
 }
 
 /**
@@ -790,6 +901,13 @@ export type UserCountOutputTypeCountClicksArgs<ExtArgs extends runtime.Types.Ext
   where?: Prisma.ProviderClickWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountFavoritesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.FavoriteWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -803,6 +921,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   views?: boolean | Prisma.User$viewsArgs<ExtArgs>
   watchlist?: boolean | Prisma.User$watchlistArgs<ExtArgs>
   clicks?: boolean | Prisma.User$clicksArgs<ExtArgs>
+  favorites?: boolean | Prisma.User$favoritesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -842,6 +961,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   views?: boolean | Prisma.User$viewsArgs<ExtArgs>
   watchlist?: boolean | Prisma.User$watchlistArgs<ExtArgs>
   clicks?: boolean | Prisma.User$clicksArgs<ExtArgs>
+  favorites?: boolean | Prisma.User$favoritesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -854,6 +974,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     views: Prisma.$ViewHistoryPayload<ExtArgs>[]
     watchlist: Prisma.$WatchlistPayload<ExtArgs>[]
     clicks: Prisma.$ProviderClickPayload<ExtArgs>[]
+    favorites: Prisma.$FavoritePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1261,6 +1382,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   views<T extends Prisma.User$viewsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$viewsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ViewHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   watchlist<T extends Prisma.User$watchlistArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$watchlistArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WatchlistPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   clicks<T extends Prisma.User$clicksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$clicksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProviderClickPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  favorites<T extends Prisma.User$favoritesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$favoritesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FavoritePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1778,6 +1900,30 @@ export type User$clicksArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
   take?: number
   skip?: number
   distinct?: Prisma.ProviderClickScalarFieldEnum | Prisma.ProviderClickScalarFieldEnum[]
+}
+
+/**
+ * User.favorites
+ */
+export type User$favoritesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Favorite
+   */
+  select?: Prisma.FavoriteSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Favorite
+   */
+  omit?: Prisma.FavoriteOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FavoriteInclude<ExtArgs> | null
+  where?: Prisma.FavoriteWhereInput
+  orderBy?: Prisma.FavoriteOrderByWithRelationInput | Prisma.FavoriteOrderByWithRelationInput[]
+  cursor?: Prisma.FavoriteWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.FavoriteScalarFieldEnum | Prisma.FavoriteScalarFieldEnum[]
 }
 
 /**

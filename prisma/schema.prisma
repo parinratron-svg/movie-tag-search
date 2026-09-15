@@ -22,7 +22,8 @@ model User {
   views     ViewHistory[]
   watchlist Watchlist[]
   clicks    ProviderClick[]
-  createdAt DateTime        @default(now())
+  favorites Favorite[]
+  createdAt DateTime @default(now())
 }
 
 enum Role {
@@ -55,6 +56,29 @@ model Movie {
   views          ViewHistory[]
   watchlist      Watchlist[]
   providerClicks ProviderClick[]
+  watchLinks  WatchLink[]
+  favorites   Favorite[]
+}
+
+model WatchLink {
+  id       String @id @default(cuid())
+  platform String
+  url      String
+  movie    Movie  @relation(fields: [movieId], references: [id], onDelete: Cascade)
+  movieId  String
+
+  @@index([movieId])
+}
+
+model Favorite {
+  id        String   @id @default(cuid())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  movie     Movie    @relation(fields: [movieId], references: [id])
+  movieId   String
+  createdAt DateTime @default(now())
+
+  @@unique([userId, movieId])
 }
 
 model Review {
@@ -64,7 +88,7 @@ model Review {
   pendingContent   String?
   pendingRating    Int?
   editStatus       EditStatus @default(NONE)
-  editRequestedAt DateTime?
+  editRequestedAt  DateTime?
   user             User       @relation(fields: [userId], references: [id])
   userId           String
   movie            Movie      @relation(fields: [movieId], references: [id])

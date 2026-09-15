@@ -2,11 +2,27 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/session";
 
-export async function GET() {
+export async function GET(req: Request) {
   try {
     const user = await getCurrentUser();
     if (!user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const movieId = new URL(req.url).searchParams.get("movieId");
+
+    if (movieId) {
+      const item = await prisma.watchlist.findUnique({
+        where: {
+          userId_movieId: {
+            userId: user.id,
+            movieId,
+          },
+        },
+        select: { id: true },
+      });
+
+      return NextResponse.json({ inWatchlist: Boolean(item) });
     }
 
     const items = await prisma.watchlist.findMany({

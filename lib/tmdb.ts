@@ -20,6 +20,32 @@ export async function fetchMovieKeywords(movieId: number) {
   const data = await res.json();
   return data.keywords?.map((k: { name: string }) => k.name) ?? [];
 }
+
+export async function fetchWatchProviders(movieId: number) {
+  const res = await fetch(
+    `${TMDB_BASE_URL}/movie/${movieId}/watch/providers?api_key=${API_KEY}`
+  );
+  if (!res.ok) throw new Error(`TMDb API error: ${res.status}`);
+  const data = await res.json();
+
+  const region = data.results?.TH ?? data.results?.US;
+  if (!region) return { link: null, providers: [] };
+
+  const providerLists = [
+    ...(region.flatrate ?? []),
+    ...(region.free ?? []),
+  ];
+
+  const providerNames = Array.from(
+    new Set(providerLists.map((p: { provider_name: string }) => p.provider_name))
+  ).slice(0, 5);
+
+  return {
+    link: region.link as string,
+    providers: providerNames as string[],
+  };
+}
+
 export async function fetchGenreMap(): Promise<Record<number, string>> {
   const res = await fetch(
     `${TMDB_BASE_URL}/genre/movie/list?api_key=${API_KEY}&language=th-TH`

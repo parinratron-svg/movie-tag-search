@@ -392,6 +392,8 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 export const ModelName = {
   User: 'User',
   Movie: 'Movie',
+  WatchLink: 'WatchLink',
+  Favorite: 'Favorite',
   Review: 'Review',
   ViewHistory: 'ViewHistory',
   Watchlist: 'Watchlist',
@@ -411,7 +413,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "movie" | "review" | "viewHistory" | "watchlist" | "providerClick"
+    modelProps: "user" | "movie" | "watchLink" | "favorite" | "review" | "viewHistory" | "watchlist" | "providerClick"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -560,6 +562,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.MovieCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.MovieCountAggregateOutputType> | number
+        }
+      }
+    }
+    WatchLink: {
+      payload: Prisma.$WatchLinkPayload<ExtArgs>
+      fields: Prisma.WatchLinkFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.WatchLinkFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WatchLinkPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.WatchLinkFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WatchLinkPayload>
+        }
+        findFirst: {
+          args: Prisma.WatchLinkFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WatchLinkPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.WatchLinkFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WatchLinkPayload>
+        }
+        findMany: {
+          args: Prisma.WatchLinkFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WatchLinkPayload>[]
+        }
+        create: {
+          args: Prisma.WatchLinkCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WatchLinkPayload>
+        }
+        createMany: {
+          args: Prisma.WatchLinkCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.WatchLinkCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WatchLinkPayload>[]
+        }
+        delete: {
+          args: Prisma.WatchLinkDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WatchLinkPayload>
+        }
+        update: {
+          args: Prisma.WatchLinkUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WatchLinkPayload>
+        }
+        deleteMany: {
+          args: Prisma.WatchLinkDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.WatchLinkUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.WatchLinkUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WatchLinkPayload>[]
+        }
+        upsert: {
+          args: Prisma.WatchLinkUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WatchLinkPayload>
+        }
+        aggregate: {
+          args: Prisma.WatchLinkAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateWatchLink>
+        }
+        groupBy: {
+          args: Prisma.WatchLinkGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WatchLinkGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.WatchLinkCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WatchLinkCountAggregateOutputType> | number
+        }
+      }
+    }
+    Favorite: {
+      payload: Prisma.$FavoritePayload<ExtArgs>
+      fields: Prisma.FavoriteFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.FavoriteFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FavoritePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.FavoriteFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FavoritePayload>
+        }
+        findFirst: {
+          args: Prisma.FavoriteFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FavoritePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.FavoriteFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FavoritePayload>
+        }
+        findMany: {
+          args: Prisma.FavoriteFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FavoritePayload>[]
+        }
+        create: {
+          args: Prisma.FavoriteCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FavoritePayload>
+        }
+        createMany: {
+          args: Prisma.FavoriteCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.FavoriteCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FavoritePayload>[]
+        }
+        delete: {
+          args: Prisma.FavoriteDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FavoritePayload>
+        }
+        update: {
+          args: Prisma.FavoriteUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FavoritePayload>
+        }
+        deleteMany: {
+          args: Prisma.FavoriteDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.FavoriteUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.FavoriteUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FavoritePayload>[]
+        }
+        upsert: {
+          args: Prisma.FavoriteUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FavoritePayload>
+        }
+        aggregate: {
+          args: Prisma.FavoriteAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateFavorite>
+        }
+        groupBy: {
+          args: Prisma.FavoriteGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FavoriteGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.FavoriteCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FavoriteCountAggregateOutputType> | number
         }
       }
     }
@@ -930,6 +1080,26 @@ export const MovieScalarFieldEnum = {
 export type MovieScalarFieldEnum = (typeof MovieScalarFieldEnum)[keyof typeof MovieScalarFieldEnum]
 
 
+export const WatchLinkScalarFieldEnum = {
+  id: 'id',
+  platform: 'platform',
+  url: 'url',
+  movieId: 'movieId'
+} as const
+
+export type WatchLinkScalarFieldEnum = (typeof WatchLinkScalarFieldEnum)[keyof typeof WatchLinkScalarFieldEnum]
+
+
+export const FavoriteScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  movieId: 'movieId',
+  createdAt: 'createdAt'
+} as const
+
+export type FavoriteScalarFieldEnum = (typeof FavoriteScalarFieldEnum)[keyof typeof FavoriteScalarFieldEnum]
+
+
 export const ReviewScalarFieldEnum = {
   id: 'id',
   content: 'content',
@@ -1180,6 +1350,8 @@ export interface PrismaClientOptions {
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
   movie?: Prisma.MovieOmit
+  watchLink?: Prisma.WatchLinkOmit
+  favorite?: Prisma.FavoriteOmit
   review?: Prisma.ReviewOmit
   viewHistory?: Prisma.ViewHistoryOmit
   watchlist?: Prisma.WatchlistOmit

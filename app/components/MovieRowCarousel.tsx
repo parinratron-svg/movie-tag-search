@@ -43,7 +43,7 @@ export default function MovieRowCarousel({
       } else {
         el.scrollBy({ left: 1.2, behavior: "auto" });
       }
-    }, 16);
+    }, 32);
 
     return () => clearInterval(interval);
   }, [autoScroll]);

@@ -68,10 +68,15 @@ export async function POST(
       message: "ส่งคำขอแก้ไขเรียบร้อยแล้ว กรุณารอแอดมินอนุมัติ",
       review: updated,
     });
-  } catch (err: any) {
+  } catch (err) {
     console.error("Error in request-edit:", err);
     return NextResponse.json(
-      { error: err?.message || "เกิดข้อผิดพลาดในการส่งคำขอแก้ไข" },
+      {
+        error:
+          err instanceof Error
+            ? err.message
+            : "เกิดข้อผิดพลาดในการส่งคำขอแก้ไข",
+      },
       { status: 500 }
     );
   }

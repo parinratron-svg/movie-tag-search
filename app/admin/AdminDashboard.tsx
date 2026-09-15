@@ -11,7 +11,6 @@ import {
   Eye,
   Shield,
   Trash2,
-  Plus,
   Star,
   CheckCircle2,
   XCircle,
@@ -90,6 +89,11 @@ type Stats = {
   pendingEditRequestsCount: number;
 };
 
+type ConfirmAction = {
+  text: string;
+  action: () => void;
+};
+
 export default function AdminDashboard({
   stats,
   users: initialUsers,
@@ -127,14 +131,7 @@ export default function AdminDashboard({
 
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<{ text: string; type: "success" | "error" } | null>(null);
-
-  // New Movie Modal
-  const [showAddMovieModal, setShowAddMovieModal] = useState(false);
-  const [newTitle, setNewTitle] = useState("");
-  const [newOverview, setNewOverview] = useState("");
-  const [newYear, setNewYear] = useState(new Date().getFullYear());
-  const [newGenres, setNewGenres] = useState("Action, Drama");
-  const [newDirector, setNewDirector] = useState("");
+  const [confirmAction, setConfirmAction] = useState<ConfirmAction | null>(null);
 
   const [syncingProviders, setSyncingProviders] = useState(false);
 
@@ -249,7 +246,13 @@ export default function AdminDashboard({
 
   // 4. Delete User
   async function handleDeleteUser(userId: string) {
-    if (!confirm("คุณแน่ใจหรือไม่ที่จะลบผู้ใช้นี้? การลบนี้รวมถึงรีวิวและประวัติทั้งหมด")) return;
+    setConfirmAction({
+      text: "คุณแน่ใจหรือไม่ที่จะลบผู้ใช้นี้? การลบนี้รวมถึงรีวิวและประวัติทั้งหมด",
+      action: () => void deleteUser(userId),
+    });
+  }
+
+  async function deleteUser(userId: string) {
     setLoading(true);
 
     try {
@@ -266,8 +269,11 @@ export default function AdminDashboard({
       setReviews((prev) => prev.filter((r) => r.user.id !== userId));
       setPendingReviews((prev) => prev.filter((r) => r.user.id !== userId));
       showNotification("ลบผู้ใช้เรียบร้อยแล้ว");
-    } catch (err: any) {
-      showNotification(err.message || "เกิดข้อผิดพลาด", "error");
+    } catch (err) {
+      showNotification(
+        err instanceof Error ? err.message : "เกิดข้อผิดพลาด",
+        "error"
+      );
     } finally {
       setLoading(false);
     }
@@ -275,7 +281,13 @@ export default function AdminDashboard({
 
   // 5. Delete Review
   async function handleDeleteReview(reviewId: string) {
-    if (!confirm("คุณแน่ใจหรือไม่ที่จะลบรีวิวนี้?")) return;
+    setConfirmAction({
+      text: "คุณแน่ใจหรือไม่ที่จะลบรีวิวนี้?",
+      action: () => void deleteReview(reviewId),
+    });
+  }
+
+  async function deleteReview(reviewId: string) {
     setLoading(true);
 
     try {
@@ -297,7 +309,13 @@ export default function AdminDashboard({
 
   // 6. Delete Movie
   async function handleDeleteMovie(movieId: string) {
-    if (!confirm("คุณแน่ใจหรือไม่ที่จะลบภาพยนตร์เรื่องนี้จากระบบ?")) return;
+    setConfirmAction({
+      text: "คุณแน่ใจหรือไม่ที่จะลบภาพยนตร์เรื่องนี้จากระบบ?",
+      action: () => void deleteMovie(movieId),
+    });
+  }
+
+  async function deleteMovie(movieId: string) {
     setLoading(true);
 
     try {
@@ -313,42 +331,6 @@ export default function AdminDashboard({
       showNotification("ลบภาพยนตร์เรียบร้อยแล้ว");
     } catch (err) {
       showNotification("เกิดข้อผิดพลาดในการลบภาพยนตร์", "error");
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  // 7. Add Movie
-  async function handleAddMovie(e: React.FormEvent) {
-    e.preventDefault();
-    if (!newTitle || !newOverview) return;
-    setLoading(true);
-
-    try {
-      const genresArray = newGenres.split(",").map((g) => g.trim()).filter(Boolean);
-
-      const res = await fetch("/api/admin/movies", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          title: newTitle,
-          overview: newOverview,
-          releaseYear: Number(newYear),
-          genres: genresArray,
-          director: newDirector || null,
-        }),
-      });
-
-      if (!res.ok) throw new Error("เพิ่มภาพยนตร์ไม่สำเร็จ");
-
-      const createdMovie = await res.json();
-      setMovies((prev) => [createdMovie, ...prev]);
-      setShowAddMovieModal(false);
-      setNewTitle("");
-      setNewOverview("");
-      showNotification("เพิ่มภาพยนตร์ใหม่เรียบร้อยแล้ว");
-    } catch (err) {
-      showNotification("เกิดข้อผิดพลาดในการเพิ่มภาพยนตร์", "error");
     } finally {
       setLoading(false);
     }
@@ -423,6 +405,48 @@ export default function AdminDashboard({
             <XCircle className="h-4 w-4" />
           )}
           {message.text}
+        </div>
+      )}
+
+      {confirmAction && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm">
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="confirm-title"
+            className="w-full max-w-sm rounded-2xl border border-slate-700 bg-[#11151D] p-6 shadow-2xl"
+          >
+            <div className="flex h-11 w-11 items-center justify-center rounded-full bg-rose-500/15 text-rose-400">
+              <Trash2 className="h-5 w-5" />
+            </div>
+            <h2 id="confirm-title" className="mt-4 text-lg font-semibold text-white">
+              ยืนยันการลบ
+            </h2>
+            <p className="mt-2 text-sm leading-relaxed text-slate-400">
+              {confirmAction.text}
+            </p>
+            <div className="mt-6 flex justify-end gap-2">
+              <button
+                type="button"
+                onClick={() => setConfirmAction(null)}
+                className="rounded-xl border border-slate-700 px-4 py-2 text-sm text-slate-300 transition hover:border-slate-500 hover:text-white"
+              >
+                ยกเลิก
+              </button>
+              <button
+                type="button"
+                disabled={loading}
+                onClick={() => {
+                  const action = confirmAction.action;
+                  setConfirmAction(null);
+                  action();
+                }}
+                className="rounded-xl bg-rose-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-rose-400 disabled:opacity-50"
+              >
+                ลบข้อมูล
+              </button>
+            </div>
+          </div>
         </div>
       )}
 
@@ -1232,13 +1256,6 @@ export default function AdminDashboard({
             <div className="space-y-6">
               <div className="flex justify-between items-center">
                 <h2 className="font-serif text-xl font-bold text-white">รายการภาพยนตร์ ({movies.length})</h2>
-                <button
-                  onClick={() => setShowAddMovieModal(true)}
-                  className="flex items-center gap-2 rounded-xl bg-[#E8A33D] px-4 py-2 text-xs font-semibold text-slate-950 hover:bg-[#f0b558] shadow-lg shadow-amber-500/10"
-                >
-                  <Plus className="h-4 w-4" />
-                  เพิ่มหนังใหม่
-                </button>
               </div>
 
               <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
@@ -1288,90 +1305,6 @@ export default function AdminDashboard({
             </div>
           )}
 
-          {/* ADD MOVIE MODAL */}
-          {showAddMovieModal && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-md">
-              <div className="w-full max-w-md rounded-2xl border border-slate-800 bg-[#0E1117] p-6 shadow-2xl">
-                <h3 className="font-serif text-xl font-bold text-white">เพิ่มภาพยนตร์ใหม่</h3>
-
-                <form onSubmit={handleAddMovie} className="mt-4 space-y-4 text-xs">
-                  <div>
-                    <label className="block text-slate-400 mb-1">ชื่อภาพยนตร์ *</label>
-                    <input
-                      type="text"
-                      required
-                      value={newTitle}
-                      onChange={(e) => setNewTitle(e.target.value)}
-                      className="w-full rounded-xl border border-slate-800 bg-slate-950 p-2.5 text-white outline-none focus:border-[#E8A33D]"
-                      placeholder="เช่น Avatar 3"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-slate-400 mb-1">เรื่องย่อ *</label>
-                    <textarea
-                      required
-                      rows={3}
-                      value={newOverview}
-                      onChange={(e) => setNewOverview(e.target.value)}
-                      className="w-full rounded-xl border border-slate-800 bg-slate-950 p-2.5 text-white outline-none focus:border-[#E8A33D]"
-                      placeholder="เรื่องย่อโดยสรุป..."
-                    />
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-slate-400 mb-1">ปีที่ฉาย</label>
-                      <input
-                        type="number"
-                        value={newYear}
-                        onChange={(e) => setNewYear(Number(e.target.value))}
-                        className="w-full rounded-xl border border-slate-800 bg-slate-950 p-2.5 text-white outline-none focus:border-[#E8A33D]"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-slate-400 mb-1">ผู้กำกับ</label>
-                      <input
-                        type="text"
-                        value={newDirector}
-                        onChange={(e) => setNewDirector(e.target.value)}
-                        className="w-full rounded-xl border border-slate-800 bg-slate-950 p-2.5 text-white outline-none focus:border-[#E8A33D]"
-                        placeholder="เช่น James Cameron"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-slate-400 mb-1">หมวดหมู่ (คั่นด้วยจุลภาค ,)</label>
-                    <input
-                      type="text"
-                      value={newGenres}
-                      onChange={(e) => setNewGenres(e.target.value)}
-                      className="w-full rounded-xl border border-slate-800 bg-slate-950 p-2.5 text-white outline-none focus:border-[#E8A33D]"
-                      placeholder="Action, Sci-Fi, Adventure"
-                    />
-                  </div>
-
-                  <div className="mt-6 flex justify-end gap-2">
-                    <button
-                      type="button"
-                      onClick={() => setShowAddMovieModal(false)}
-                      className="rounded-xl border border-slate-800 px-4 py-2 text-xs text-slate-400 hover:text-white"
-                    >
-                      ยกเลิก
-                    </button>
-                    <button
-                      type="submit"
-                      disabled={loading}
-                      className="rounded-xl bg-[#E8A33D] px-4 py-2 text-xs font-semibold text-slate-950 hover:bg-[#f0b558] disabled:opacity-50"
-                    >
-                      บันทึก
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          )}
         </main>
       </div>
     </div>

@@ -26,7 +26,7 @@ export async function POST() {
 
     const movies = await prisma.movie.findMany({
       select: { id: true, tmdbId: true, title: true },
-      take: 100,
+      take: 200,
     });
 
     let updatedCount = 0;

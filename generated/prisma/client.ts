@@ -55,6 +55,16 @@ export type User = Prisma.UserModel
  */
 export type Movie = Prisma.MovieModel
 /**
+ * Model WatchLink
+ * 
+ */
+export type WatchLink = Prisma.WatchLinkModel
+/**
+ * Model Favorite
+ * 
+ */
+export type Favorite = Prisma.FavoriteModel
+/**
  * Model Review
  * 
  */

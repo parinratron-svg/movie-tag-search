@@ -12,19 +12,15 @@ export default function WatchlistButton({ movieId, initialInWatchlist = false }:
   const [inWatchlist, setInWatchlist] = useState(initialInWatchlist);
   const [loading, setLoading] = useState(false);
   const [fetchingStatus, setFetchingStatus] = useState(true);
+  const [message, setMessage] = useState<string | null>(null);
 
   useEffect(() => {
     async function checkStatus() {
       try {
-        const res = await fetch("/api/watchlist");
+        const res = await fetch(`/api/watchlist?movieId=${movieId}`);
         if (res.ok) {
           const data = await res.json();
-          if (data.watchlist) {
-            const exists = data.watchlist.some(
-              (item: { movie: { id: string } }) => item.movie.id === movieId
-            );
-            setInWatchlist(exists);
-          }
+          setInWatchlist(Boolean(data.inWatchlist));
         }
       } catch (err) {
         console.error("Watchlist status check failed:", err);
@@ -52,7 +48,7 @@ export default function WatchlistButton({ movieId, initialInWatchlist = false }:
           body: JSON.stringify({ movieId }),
         });
         if (res.status === 401) {
-          alert("กรุณาล็อกอินก่อนเพิ่มหนังเข้าในรายการที่อยากดู");
+          setMessage("กรุณาล็อกอินก่อนเพิ่มหนังเข้าในรายการที่อยากดู");
           return;
         }
         if (res.ok) {
@@ -67,28 +63,35 @@ export default function WatchlistButton({ movieId, initialInWatchlist = false }:
   }
 
   return (
-    <button
-      onClick={toggleWatchlist}
-      disabled={loading || fetchingStatus}
-      className={`flex items-center gap-2 rounded-full px-4 py-2 text-xs sm:text-sm font-medium transition-all ${
-        inWatchlist
-          ? "bg-[#E8A33D]/20 text-[#E8A33D] border border-[#E8A33D]/50 hover:bg-[#E8A33D]/30"
-          : "bg-white/10 text-white hover:bg-white/20 border border-white/15"
-      }`}
-    >
-      {loading ? (
-        <Loader2 className="h-4 w-4 animate-spin text-white/70" />
-      ) : inWatchlist ? (
-        <>
-          <Check className="h-4 w-4 text-[#E8A33D]" />
-          <span>อยู่ในรายการที่อยากดูแล้ว</span>
-        </>
-      ) : (
-        <>
-          <Bookmark className="h-4 w-4 text-white/80" />
-          <span>+ เพิ่มในรายการที่อยากดู</span>
-        </>
+    <div className="space-y-2">
+      <button
+        onClick={toggleWatchlist}
+        disabled={loading || fetchingStatus}
+        className={`flex items-center gap-2 rounded-full px-4 py-2 text-xs sm:text-sm font-medium transition-all ${
+          inWatchlist
+            ? "bg-[#E8A33D]/20 text-[#E8A33D] border border-[#E8A33D]/50 hover:bg-[#E8A33D]/30"
+            : "bg-white/10 text-white hover:bg-white/20 border border-white/15"
+        }`}
+      >
+        {loading ? (
+          <Loader2 className="h-4 w-4 animate-spin text-white/70" />
+        ) : inWatchlist ? (
+          <>
+            <Check className="h-4 w-4 text-[#E8A33D]" />
+            <span>อยู่ในรายการที่อยากดูแล้ว</span>
+          </>
+        ) : (
+          <>
+            <Bookmark className="h-4 w-4 text-white/80" />
+            <span>+ เพิ่มในรายการที่อยากดู</span>
+          </>
+        )}
+      </button>
+      {message && (
+        <p className="text-xs text-rose-300" role="status">
+          {message}
+        </p>
       )}
-    </button>
+    </div>
   );
 }

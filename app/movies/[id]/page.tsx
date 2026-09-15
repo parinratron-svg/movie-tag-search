@@ -9,7 +9,7 @@ import ReviewList from "./ReviewList";
 import RecordView from "./RecordView";
 import WatchlistButton from "./WatchlistButton";
 import WatchProvidersList from "./WatchProvidersList";
-
+import FavoriteButton from "./FavoriteButton";
 export const dynamic = "force-dynamic";
 
 export default async function MovieDetailPage({
@@ -36,6 +36,9 @@ export default async function MovieDetailPage({
       trailerKey: true,
       director: true,
       cast: true,
+      watchLinks: {
+        select: { id: true, platform: true },
+      },
       reviews: {
         select: {
           id: true,
@@ -55,29 +58,22 @@ export default async function MovieDetailPage({
 
   if (!movie) notFound();
 
+  const isFavorited = currentUser
+    ? Boolean(
+        await prisma.favorite.findUnique({
+          where: {
+            userId_movieId: { userId: currentUser.id, movieId: id },
+          },
+        })
+      )
+    : false;
+
   const posterUrl = movie.posterPath
     ? `https://image.tmdb.org/t/p/w500${movie.posterPath}`
     : null;
 
   const detailsContent = (
     <div>
-      <p className="text-sm leading-relaxed text-white/70">
-        {movie.overview || "ไม่มีเรื่องย่อ"}
-      </p>
-
-      {movie.genres.length > 0 && (
-        <div className="mt-4 flex flex-wrap gap-1.5">
-          {movie.genres.map((g) => (
-            <span
-              key={g}
-              className="rounded-full bg-white/10 px-2.5 py-1 text-xs"
-            >
-              {g}
-            </span>
-          ))}
-        </div>
-      )}
-
       {movie.tags.length > 0 && (
         <div className="mt-2 flex flex-wrap gap-1.5">
           {movie.tags.slice(0, 8).map((tag) => (
@@ -90,6 +86,26 @@ export default async function MovieDetailPage({
           ))}
         </div>
       )}
+
+      <div className="mt-6">
+        <p className="text-sm text-white/50">ดูได้ที่</p>
+        {movie.watchLinks.length > 0 ? (
+          <div className="mt-2 flex flex-wrap gap-2">
+            {movie.watchLinks.map((link) => (
+              <span
+                key={link.id}
+                className="rounded-lg border border-white/15 bg-white/5 px-3 py-1.5 text-sm text-white/80"
+              >
+                {link.platform}
+              </span>
+            ))}
+          </div>
+        ) : (
+          <p className="mt-2 text-sm text-white/40">
+            ยังไม่มีข้อมูลช่องทางรับชมสำหรับเรื่องนี้
+          </p>
+        )}
+      </div>
 
     </div>
   );
@@ -136,8 +152,20 @@ export default async function MovieDetailPage({
   return (
     <>
       <RecordView movieId={movie.id} />
-      <main className="min-h-screen bg-[#0F1115] text-[#F5F1E8]">
-      <div className="mx-auto max-w-4xl px-6 py-10 sm:px-10">
+      <main className="relative min-h-screen overflow-hidden bg-[#0F1115] text-[#F5F1E8]">
+      {posterUrl && (
+        <div className="absolute inset-x-0 top-0 h-125 overflow-hidden">
+          <Image
+            src={posterUrl}
+            alt=""
+            fill
+            className="scale-110 object-cover opacity-25 blur-2xl"
+          />
+          <div className="absolute inset-0 bg-linear-to-b from-transparent via-[#0F1115]/60 to-[#0F1115]" />
+        </div>
+      )}
+
+      <div className="relative mx-auto max-w-4xl px-6 py-10 sm:px-10">
         <div className="grid gap-8 sm:grid-cols-[240px_1fr]">
           <div className="relative aspect-2/3 overflow-hidden rounded-lg bg-white/5 shadow-xl shadow-black/50">
             {posterUrl ? (
@@ -180,11 +208,49 @@ export default async function MovieDetailPage({
               movieId={movie.id}
               watchProviders={movie.watchProviders || []}
             />
+            {movie.genres.length > 0 && (
+              <div className="mt-3 flex flex-wrap gap-1.5">
+                {movie.genres.map((g) => (
+                  <span
+                    key={g}
+                    className="rounded-full bg-white/10 px-2.5 py-1 text-xs"
+                  >
+                    {g}
+                  </span>
+                ))}
+              </div>
+            )}
+
+            <p className="mt-4 max-w-prose text-sm leading-relaxed text-white/70">
+              {movie.overview || "ไม่มีเรื่องย่อ"}
+            </p>
+
+            {movie.director && (
+              <p className="mt-3 text-sm text-white/50">
+                กำกับโดย <span className="text-white/80">{movie.director}</span>
+              </p>
+            )}
+
+            <div className="mt-5 flex flex-wrap items-center gap-3">
+              {movie.trailerKey && (
+                <a
+                  href="#trailer"
+                  className="inline-block rounded-full bg-[#E8A33D] px-5 py-2 text-sm font-medium text-[#0F1115] hover:bg-[#f0b558]"
+                >
+                  ▶ ดูตัวอย่าง
+                </a>
+              )}
+              <FavoriteButton
+                movieId={movie.id}
+                initialFavorited={isFavorited}
+                isLoggedIn={Boolean(currentUser)}
+              />
+            </div>
           </div>
         </div>
 
         {movie.trailerKey && (
-          <div className="mt-10">
+          <div id="trailer" className="mt-10 scroll-mt-20">
             <p className="mb-3 text-sm text-white/50">ตัวอย่างภาพยนตร์</p>
             <div className="relative aspect-video overflow-hidden rounded-lg shadow-xl shadow-black/50">
               <iframe

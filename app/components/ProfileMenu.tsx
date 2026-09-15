@@ -8,6 +8,7 @@ import {
   User as UserIcon,
   Settings,
   Clock,
+  Heart,
   LogOut,
   ChevronDown,
   Shield,
@@ -103,16 +104,22 @@ export default function ProfileMenu({
             <Settings className="h-4 w-4" />
             ตั้งค่า
           </Link>
-          {role === "ADMIN" && (
-            <Link
-              href="/profile/history"
-              onClick={() => setOpen(false)}
-              className="flex items-center gap-2.5 px-4 py-3 text-sm text-white/80 hover:bg-white/5"
-            >
-              <Clock className="h-4 w-4" />
-              ประวัติการดู
-            </Link>
-          )}
+          <Link
+            href="/profile/favorites"
+            onClick={() => setOpen(false)}
+            className="flex items-center gap-2.5 px-4 py-3 text-sm text-white/80 hover:bg-white/5"
+          >
+            <Heart className="h-4 w-4" />
+            รายการโปรด
+          </Link>
+          <Link
+            href="/profile/history"
+            onClick={() => setOpen(false)}
+            className="flex items-center gap-2.5 px-4 py-3 text-sm text-white/80 hover:bg-white/5"
+          >
+            <Clock className="h-4 w-4" />
+            ประวัติการดู
+          </Link>
           <button
             onClick={handleLogout}
             className="flex w-full items-center gap-2.5 border-t border-white/10 px-4 py-3 text-left text-sm text-red-400 hover:bg-white/5"

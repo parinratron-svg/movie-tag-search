@@ -5,6 +5,7 @@ import {
   fetchGenreMap,
   fetchMovieVideos,
   fetchMovieCredits,
+  fetchWatchProviders,
 } from "../lib/tmdb";
 
 const prisma = new PrismaClient();
@@ -45,37 +46,43 @@ async function main() {
     const overview = thaiOverviewMap.get(movie.id) || movie.overview;
     const trailerKey = await fetchMovieVideos(movie.id);
     const { director, cast } = await fetchMovieCredits(movie.id);
+    const { link: watchLink, providers } = await fetchWatchProviders(movie.id);
+
+    const movieData = {
+      title: movie.title,
+      overview,
+      posterPath: movie.poster_path,
+      releaseYear: movie.release_date
+        ? parseInt(movie.release_date.split("-")[0])
+        : null,
+      voteAverage: movie.vote_average ?? null,
+      genres,
+      tags: keywords,
+      trailerKey,
+      director,
+      cast,
+    };
+
+    const watchLinksData =
+      providers.length > 0 && watchLink
+        ? providers.map((platform) => ({ platform, url: watchLink }))
+        : [];
 
     await prisma.movie.upsert({
       where: { tmdbId: movie.id },
       update: {
-        title: movie.title,
-        overview,
-        posterPath: movie.poster_path,
-        releaseYear: movie.release_date
-          ? parseInt(movie.release_date.split("-")[0])
-          : null,
-        voteAverage: movie.vote_average ?? null,
-        genres,
-        tags: keywords,
-        trailerKey,
-        director,
-        cast,
+        ...movieData,
+        watchLinks: {
+          deleteMany: {},
+          create: watchLinksData,
+        },
       },
       create: {
         tmdbId: movie.id,
-        title: movie.title,
-        overview,
-        posterPath: movie.poster_path,
-        releaseYear: movie.release_date
-          ? parseInt(movie.release_date.split("-")[0])
-          : null,
-        voteAverage: movie.vote_average ?? null,
-        genres,
-        tags: keywords,
-        trailerKey,
-        director,
-        cast,
+        ...movieData,
+        watchLinks: {
+          create: watchLinksData,
+        },
       },
     });
 

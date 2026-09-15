@@ -31,11 +31,6 @@ export default async function HistoryPage() {
   const user = await getCurrentUser();
   if (!user) redirect("/login");
 
-  // Restrict history page to ADMIN only
-  if (user.role !== "ADMIN") {
-    redirect("/");
-  }
-
   const views = await prisma.viewHistory.findMany({
     where: { userId: user.id },
     include: { movie: true },
