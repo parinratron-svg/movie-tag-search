@@ -393,7 +393,9 @@ export const ModelName = {
   User: 'User',
   Movie: 'Movie',
   Review: 'Review',
-  ViewHistory: 'ViewHistory'
+  ViewHistory: 'ViewHistory',
+  Watchlist: 'Watchlist',
+  ProviderClick: 'ProviderClick'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -409,7 +411,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "movie" | "review" | "viewHistory"
+    modelProps: "user" | "movie" | "review" | "viewHistory" | "watchlist" | "providerClick"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -709,6 +711,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Watchlist: {
+      payload: Prisma.$WatchlistPayload<ExtArgs>
+      fields: Prisma.WatchlistFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.WatchlistFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WatchlistPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.WatchlistFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WatchlistPayload>
+        }
+        findFirst: {
+          args: Prisma.WatchlistFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WatchlistPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.WatchlistFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WatchlistPayload>
+        }
+        findMany: {
+          args: Prisma.WatchlistFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WatchlistPayload>[]
+        }
+        create: {
+          args: Prisma.WatchlistCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WatchlistPayload>
+        }
+        createMany: {
+          args: Prisma.WatchlistCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.WatchlistCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WatchlistPayload>[]
+        }
+        delete: {
+          args: Prisma.WatchlistDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WatchlistPayload>
+        }
+        update: {
+          args: Prisma.WatchlistUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WatchlistPayload>
+        }
+        deleteMany: {
+          args: Prisma.WatchlistDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.WatchlistUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.WatchlistUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WatchlistPayload>[]
+        }
+        upsert: {
+          args: Prisma.WatchlistUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WatchlistPayload>
+        }
+        aggregate: {
+          args: Prisma.WatchlistAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateWatchlist>
+        }
+        groupBy: {
+          args: Prisma.WatchlistGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WatchlistGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.WatchlistCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WatchlistCountAggregateOutputType> | number
+        }
+      }
+    }
+    ProviderClick: {
+      payload: Prisma.$ProviderClickPayload<ExtArgs>
+      fields: Prisma.ProviderClickFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ProviderClickFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProviderClickPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ProviderClickFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProviderClickPayload>
+        }
+        findFirst: {
+          args: Prisma.ProviderClickFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProviderClickPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ProviderClickFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProviderClickPayload>
+        }
+        findMany: {
+          args: Prisma.ProviderClickFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProviderClickPayload>[]
+        }
+        create: {
+          args: Prisma.ProviderClickCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProviderClickPayload>
+        }
+        createMany: {
+          args: Prisma.ProviderClickCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ProviderClickCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProviderClickPayload>[]
+        }
+        delete: {
+          args: Prisma.ProviderClickDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProviderClickPayload>
+        }
+        update: {
+          args: Prisma.ProviderClickUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProviderClickPayload>
+        }
+        deleteMany: {
+          args: Prisma.ProviderClickDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ProviderClickUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ProviderClickUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProviderClickPayload>[]
+        }
+        upsert: {
+          args: Prisma.ProviderClickUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProviderClickPayload>
+        }
+        aggregate: {
+          args: Prisma.ProviderClickAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateProviderClick>
+        }
+        groupBy: {
+          args: Prisma.ProviderClickGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ProviderClickGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ProviderClickCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ProviderClickCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -771,6 +921,7 @@ export const MovieScalarFieldEnum = {
   voteAverage: 'voteAverage',
   genres: 'genres',
   tags: 'tags',
+  watchProviders: 'watchProviders',
   trailerKey: 'trailerKey',
   director: 'director',
   cast: 'cast'
@@ -804,6 +955,27 @@ export const ViewHistoryScalarFieldEnum = {
 } as const
 
 export type ViewHistoryScalarFieldEnum = (typeof ViewHistoryScalarFieldEnum)[keyof typeof ViewHistoryScalarFieldEnum]
+
+
+export const WatchlistScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  movieId: 'movieId',
+  createdAt: 'createdAt'
+} as const
+
+export type WatchlistScalarFieldEnum = (typeof WatchlistScalarFieldEnum)[keyof typeof WatchlistScalarFieldEnum]
+
+
+export const ProviderClickScalarFieldEnum = {
+  id: 'id',
+  providerName: 'providerName',
+  movieId: 'movieId',
+  userId: 'userId',
+  createdAt: 'createdAt'
+} as const
+
+export type ProviderClickScalarFieldEnum = (typeof ProviderClickScalarFieldEnum)[keyof typeof ProviderClickScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1010,6 +1182,8 @@ export type GlobalOmitConfig = {
   movie?: Prisma.MovieOmit
   review?: Prisma.ReviewOmit
   viewHistory?: Prisma.ViewHistoryOmit
+  watchlist?: Prisma.WatchlistOmit
+  providerClick?: Prisma.ProviderClickOmit
 }
 
 /* Types for Logging */

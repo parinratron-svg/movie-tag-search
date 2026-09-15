@@ -7,6 +7,9 @@ import MovieTabs from "./MovieTabs";
 import { getCurrentUser } from "@/lib/session";
 import ReviewList from "./ReviewList";
 import RecordView from "./RecordView";
+import WatchlistButton from "./WatchlistButton";
+import WatchProvidersList from "./WatchProvidersList";
+
 export const dynamic = "force-dynamic";
 
 export default async function MovieDetailPage({
@@ -29,6 +32,7 @@ export default async function MovieDetailPage({
       voteAverage: true,
       genres: true,
       tags: true,
+      watchProviders: true,
       trailerKey: true,
       director: true,
       cast: true,
@@ -167,6 +171,15 @@ export default async function MovieDetailPage({
             <h1 className="mt-1 font-serif text-3xl sm:text-4xl">
               {movie.title}
             </h1>
+
+            <div className="mt-4">
+              <WatchlistButton movieId={movie.id} />
+            </div>
+
+            <WatchProvidersList
+              movieId={movie.id}
+              watchProviders={movie.watchProviders || []}
+            />
           </div>
         </div>
 

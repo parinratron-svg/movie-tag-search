@@ -12,15 +12,17 @@ datasource db {
 }
 
 model User {
-  id        String       @id @default(cuid())
-  email     String       @unique
+  id        String          @id @default(cuid())
+  email     String          @unique
   password  String
   name      String
-  role      Role         @default(USER)
-  avatarUrl String?      @db.Text
+  role      Role            @default(USER)
+  avatarUrl String?         @db.Text
   reviews   Review[]
   views     ViewHistory[]
-  createdAt DateTime     @default(now())
+  watchlist Watchlist[]
+  clicks    ProviderClick[]
+  createdAt DateTime        @default(now())
 }
 
 enum Role {
@@ -36,20 +38,23 @@ enum EditStatus {
 }
 
 model Movie {
-  id          String        @id @default(cuid())
-  tmdbId      Int           @unique
-  title       String
-  overview    String
-  posterPath  String?
-  releaseYear Int?
-  voteAverage Float?
-  genres      String[]
-  tags        String[]
-  trailerKey  String?
-  director    String?
-  cast        String[]
-  reviews     Review[]
-  views       ViewHistory[]
+  id             String          @id @default(cuid())
+  tmdbId         Int             @unique
+  title          String
+  overview       String
+  posterPath     String?
+  releaseYear    Int?
+  voteAverage    Float?
+  genres         String[]
+  tags           String[]
+  watchProviders String[]        // Format: "ProviderName|https://link.com"
+  trailerKey     String?
+  director       String?
+  cast           String[]
+  reviews        Review[]
+  views          ViewHistory[]
+  watchlist      Watchlist[]
+  providerClicks ProviderClick[]
 }
 
 model Review {
@@ -78,4 +83,29 @@ model ViewHistory {
 
   @@unique([userId, movieId])
   @@index([userId, viewedAt])
+}
+
+model Watchlist {
+  id        String   @id @default(cuid())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  movie     Movie    @relation(fields: [movieId], references: [id], onDelete: Cascade)
+  movieId   String
+  createdAt DateTime @default(now())
+
+  @@unique([userId, movieId])
+  @@index([userId])
+}
+
+model ProviderClick {
+  id           String   @id @default(cuid())
+  providerName String
+  movie        Movie    @relation(fields: [movieId], references: [id], onDelete: Cascade)
+  movieId      String
+  user         User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  userId       String?
+  createdAt    DateTime @default(now())
+
+  @@index([providerName])
+  @@index([movieId])
 }

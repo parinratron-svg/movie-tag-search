@@ -11,6 +11,7 @@ import {
   LogOut,
   ChevronDown,
   Shield,
+  Bookmark,
 } from "lucide-react";
 
 export default function ProfileMenu({
@@ -85,6 +86,14 @@ export default function ProfileMenu({
           >
             <UserIcon className="h-4 w-4" />
             โปรไฟล์ของฉัน
+          </Link>
+          <Link
+            href="/profile/watchlist"
+            onClick={() => setOpen(false)}
+            className="flex items-center gap-2.5 px-4 py-3 text-sm text-[#E8A33D] font-medium hover:bg-white/5"
+          >
+            <Bookmark className="h-4 w-4 text-[#E8A33D]" />
+            รายการที่อยากดูของฉัน
           </Link>
           <Link
             href="/profile"

@@ -64,3 +64,13 @@ export type Review = Prisma.ReviewModel
  * 
  */
 export type ViewHistory = Prisma.ViewHistoryModel
+/**
+ * Model Watchlist
+ * 
+ */
+export type Watchlist = Prisma.WatchlistModel
+/**
+ * Model ProviderClick
+ * 
+ */
+export type ProviderClick = Prisma.ProviderClickModel

@@ -97,6 +97,7 @@ export default function AdminDashboard({
   movies: initialMovies,
   pendingReviews: initialPendingReviews,
   allViewsByUser: initialAllViewsByUser,
+  providerStats = [],
   currentUserId,
 }: {
   stats: Stats;
@@ -105,6 +106,7 @@ export default function AdminDashboard({
   movies: MovieItem[];
   pendingReviews: ReviewItem[];
   allViewsByUser: Record<string, ViewRecord[]>;
+  providerStats?: Array<{ providerName: string; count: number }>;
   currentUserId: string;
 }) {
   const router = useRouter();
@@ -617,18 +619,61 @@ export default function AdminDashboard({
                 </div>
               </div>
 
+              {/* Provider Click Analytics Card */}
               <div className="rounded-2xl border border-slate-800 bg-[#0E1117] p-6 shadow-xl">
-                <h3 className="font-serif text-lg font-bold text-white">คำแนะนำการใช้งานแผงแอดมิน</h3>
-                <ul className="mt-3 space-y-2 text-xs text-slate-300">
-                  <li className="flex items-center gap-2">
-                    <Shield className="h-4 w-4 text-[#E8A33D]" />
-                    แผงควบคุมนี้แยกจากหน้าผู้ใช้ทั่วไปอย่างชัดเจนเพื่อความปลอดภัยและประสิทธิภาพการจัดการ
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle2 className="h-4 w-4 text-emerald-400" />
-                    เมื่อผู้ใช้ขอแก้ไขรีวิว คุณสามารถกดอนุมัติหรือปฏิเสธคำขอได้จากเมนู **"คำขอแก้ไขรีวิว"**
-                  </li>
-                </ul>
+                <div className="flex items-center justify-between border-b border-slate-800/80 pb-4">
+                  <div>
+                    <h3 className="font-serif text-lg font-bold text-white flex items-center gap-2">
+                      <MousePointerClick className="h-5 w-5 text-[#E8A33D]" />
+                      <span>สถิติจำนวนผู้ใช้กดลิงก์เปิดวาร์ปไปดูบนแพลตฟอร์มถูกลิขสิทธิ์</span>
+                    </h3>
+                    <p className="text-xs text-slate-400 mt-1">
+                      สรุปสถิติว่าผู้ใช้งานในเว็บกดลิงก์ออกไปดูหนังในช่องทางถูกลิขสิทธิ์ช่องทางใดมากที่สุด
+                    </p>
+                  </div>
+                  <span className="rounded-full bg-amber-500/10 border border-amber-500/30 px-3 py-1 text-xs font-bold text-[#E8A33D]">
+                    {providerStats?.reduce((a, b) => a + b.count, 0) || 0} Clicks
+                  </span>
+                </div>
+
+                {!providerStats || providerStats.length === 0 ? (
+                  <div className="py-8 text-center text-xs text-slate-500">
+                    ยังไม่มีข้อมูลการกดเปิดวาร์ปไปดูแพลตฟอร์มต่างๆ (เริ่มนับเมื่อผู้ใช้กดดูบน Netflix, Disney+ ฯลฯ)
+                  </div>
+                ) : (
+                  <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                    {providerStats.map((p) => {
+                      const totalClicks = providerStats.reduce((a, b) => a + b.count, 0) || 1;
+                      const percent = Math.round((p.count / totalClicks) * 100);
+
+                      let color = "bg-amber-500 text-amber-400 border-amber-500/30";
+                      if (p.providerName.includes("Netflix")) color = "bg-red-600 text-red-400 border-red-500/30";
+                      if (p.providerName.includes("Disney")) color = "bg-blue-600 text-blue-300 border-blue-500/30";
+                      if (p.providerName.includes("Prime")) color = "bg-sky-500 text-sky-300 border-sky-400/30";
+                      if (p.providerName.includes("HBO")) color = "bg-purple-600 text-purple-300 border-purple-500/30";
+                      if (p.providerName.includes("Viu")) color = "bg-yellow-500 text-yellow-300 border-yellow-400/30";
+                      if (p.providerName.includes("TrueID")) color = "bg-rose-600 text-rose-300 border-rose-500/30";
+
+                      return (
+                        <div
+                          key={p.providerName}
+                          className="rounded-xl border border-slate-800 bg-[#090B0E] p-4 flex flex-col justify-between"
+                        >
+                          <div className="flex items-center justify-between">
+                            <span className="text-xs font-bold text-white">{p.providerName}</span>
+                            <span className="text-xs font-semibold text-slate-400">{p.count} ครั้ง ({percent}%)</span>
+                          </div>
+                          <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-slate-800">
+                            <div
+                              className={`h-full transition-all duration-500 ${color.split(" ")[0]}`}
+                              style={{ width: `${percent}%` }}
+                            />
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
             </div>
           )}

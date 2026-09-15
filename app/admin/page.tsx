@@ -151,6 +151,18 @@ export default async function AdminPage() {
     },
   });
 
+  // 7. Provider Click Analytics
+  const providerClicksRaw = await prisma.providerClick.groupBy({
+    by: ["providerName"],
+    _count: { _all: true },
+    orderBy: { _count: { providerName: "desc" } },
+  });
+
+  const providerStats = providerClicksRaw.map((p) => ({
+    providerName: p.providerName,
+    count: p._count._all,
+  }));
+
   return (
     <main className="min-h-screen bg-[#0F1115] text-[#F5F1E8]">
       <AdminDashboard
@@ -166,6 +178,7 @@ export default async function AdminPage() {
         movies={movies}
         pendingReviews={pendingReviews}
         allViewsByUser={allViewsByUser}
+        providerStats={providerStats}
         currentUserId={user.id}
       />
     </main>
