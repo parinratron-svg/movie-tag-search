@@ -37,6 +37,9 @@ export default async function MovieDetailPage({
           id: true,
           content: true,
           rating: true,
+          pendingContent: true,
+          pendingRating: true,
+          editStatus: true,
           userId: true,
           createdAt: true,
           user: { select: { name: true, avatarUrl: true } },
@@ -121,6 +124,7 @@ export default async function MovieDetailPage({
       <ReviewList
         reviews={movie.reviews}
         currentUserId={currentUser?.id ?? null}
+        currentUserRole={currentUser?.role ?? null}
       />
     </div>
   );

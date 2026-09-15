@@ -783,6 +783,10 @@ export const ReviewScalarFieldEnum = {
   id: 'id',
   content: 'content',
   rating: 'rating',
+  pendingContent: 'pendingContent',
+  pendingRating: 'pendingRating',
+  editStatus: 'editStatus',
+  editRequestedAt: 'editRequestedAt',
   userId: 'userId',
   movieId: 'movieId',
   createdAt: 'createdAt'
@@ -795,6 +799,7 @@ export const ViewHistoryScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   movieId: 'movieId',
+  viewCount: 'viewCount',
   viewedAt: 'viewedAt'
 } as const
 
@@ -898,6 +903,20 @@ export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, '
  * Reference to a field of type 'Float[]'
  */
 export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
+
+
+/**
+ * Reference to a field of type 'EditStatus'
+ */
+export type EnumEditStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EditStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'EditStatus[]'
+ */
+export type ListEnumEditStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EditStatus[]'>
     
 
 /**

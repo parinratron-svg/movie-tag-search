@@ -10,14 +10,17 @@ import {
   Clock,
   LogOut,
   ChevronDown,
+  Shield,
 } from "lucide-react";
 
 export default function ProfileMenu({
   name,
   avatarUrl,
+  role,
 }: {
   name: string;
   avatarUrl: string | null;
+  role?: string;
 }) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
@@ -55,11 +58,26 @@ export default function ProfileMenu({
           )}
         </div>
         <span className="hidden sm:inline">{name}</span>
+        {role === "ADMIN" && (
+          <span className="rounded bg-[#E8A33D]/20 px-1.5 py-0.5 text-[10px] font-bold text-[#E8A33D] border border-[#E8A33D]/30">
+            ADMIN
+          </span>
+        )}
         <ChevronDown className="h-3.5 w-3.5" />
       </button>
 
       {open && (
-        <div className="absolute right-0 top-full mt-2 w-48 overflow-hidden rounded-xl border border-white/10 bg-[#15171C] shadow-2xl shadow-black/60">
+        <div className="absolute right-0 top-full mt-2 w-52 overflow-hidden rounded-xl border border-white/10 bg-[#15171C] shadow-2xl shadow-black/60">
+          {role === "ADMIN" && (
+            <Link
+              href="/admin"
+              onClick={() => setOpen(false)}
+              className="flex items-center gap-2.5 bg-[#E8A33D]/10 px-4 py-3 text-sm font-semibold text-[#E8A33D] hover:bg-[#E8A33D]/20 border-b border-white/10"
+            >
+              <Shield className="h-4 w-4 text-[#E8A33D]" />
+              แผงควบคุมผู้ดูแลระบบ
+            </Link>
+          )}
           <Link
             href="/profile"
             onClick={() => setOpen(false)}
@@ -76,14 +94,16 @@ export default function ProfileMenu({
             <Settings className="h-4 w-4" />
             ตั้งค่า
           </Link>
-          <Link
-            href="/profile/history"
-            onClick={() => setOpen(false)}
-            className="flex items-center gap-2.5 px-4 py-3 text-sm text-white/80 hover:bg-white/5"
-          >
-            <Clock className="h-4 w-4" />
-            ประวัติการดู
-          </Link>
+          {role === "ADMIN" && (
+            <Link
+              href="/profile/history"
+              onClick={() => setOpen(false)}
+              className="flex items-center gap-2.5 px-4 py-3 text-sm text-white/80 hover:bg-white/5"
+            >
+              <Clock className="h-4 w-4" />
+              ประวัติการดู
+            </Link>
+          )}
           <button
             onClick={handleLogout}
             className="flex w-full items-center gap-2.5 border-t border-white/10 px-4 py-3 text-left text-sm text-red-400 hover:bg-white/5"

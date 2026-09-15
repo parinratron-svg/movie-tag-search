@@ -27,17 +27,24 @@ export async function POST(request: Request) {
       userId: user.id,
       movieId,
     },
-    select: { id: true },
+    select: { id: true, viewCount: true },
   });
 
   if (existing) {
     await prisma.viewHistory.update({
       where: { id: existing.id },
-      data: { viewedAt: new Date() },
+      data: {
+        viewedAt: new Date(),
+        viewCount: { increment: 1 },
+      },
     });
   } else {
     await prisma.viewHistory.create({
-      data: { userId: user.id, movieId },
+      data: {
+        userId: user.id,
+        movieId,
+        viewCount: 1,
+      },
     });
   }
 

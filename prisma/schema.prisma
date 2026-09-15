@@ -1,9 +1,6 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client"
   output   = "../generated/prisma"
@@ -31,6 +28,13 @@ enum Role {
   ADMIN
 }
 
+enum EditStatus {
+  NONE
+  PENDING
+  APPROVED
+  REJECTED
+}
+
 model Movie {
   id          String        @id @default(cuid())
   tmdbId      Int           @unique
@@ -49,22 +53,28 @@ model Movie {
 }
 
 model Review {
+  id               String     @id @default(cuid())
+  content          String
+  rating           Int
+  pendingContent   String?
+  pendingRating    Int?
+  editStatus       EditStatus @default(NONE)
+  editRequestedAt DateTime?
+  user             User       @relation(fields: [userId], references: [id])
+  userId           String
+  movie            Movie      @relation(fields: [movieId], references: [id])
+  movieId          String
+  createdAt        DateTime   @default(now())
+}
+
+model ViewHistory {
   id        String   @id @default(cuid())
-  content   String
-  rating    Int
   user      User     @relation(fields: [userId], references: [id])
   userId    String
   movie     Movie    @relation(fields: [movieId], references: [id])
   movieId   String
-  createdAt DateTime @default(now())
-}
-model ViewHistory {
-  id       String   @id @default(cuid())
-  user     User     @relation(fields: [userId], references: [id])
-  userId   String
-  movie    Movie    @relation(fields: [movieId], references: [id])
-  movieId  String
-  viewedAt DateTime @default(now())
+  viewCount Int      @default(1)
+  viewedAt  DateTime @default(now())
 
   @@unique([userId, movieId])
   @@index([userId, viewedAt])

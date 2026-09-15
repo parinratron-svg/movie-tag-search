@@ -28,16 +28,22 @@ export type AggregateReview = {
 
 export type ReviewAvgAggregateOutputType = {
   rating: number | null
+  pendingRating: number | null
 }
 
 export type ReviewSumAggregateOutputType = {
   rating: number | null
+  pendingRating: number | null
 }
 
 export type ReviewMinAggregateOutputType = {
   id: string | null
   content: string | null
   rating: number | null
+  pendingContent: string | null
+  pendingRating: number | null
+  editStatus: $Enums.EditStatus | null
+  editRequestedAt: Date | null
   userId: string | null
   movieId: string | null
   createdAt: Date | null
@@ -47,6 +53,10 @@ export type ReviewMaxAggregateOutputType = {
   id: string | null
   content: string | null
   rating: number | null
+  pendingContent: string | null
+  pendingRating: number | null
+  editStatus: $Enums.EditStatus | null
+  editRequestedAt: Date | null
   userId: string | null
   movieId: string | null
   createdAt: Date | null
@@ -56,6 +66,10 @@ export type ReviewCountAggregateOutputType = {
   id: number
   content: number
   rating: number
+  pendingContent: number
+  pendingRating: number
+  editStatus: number
+  editRequestedAt: number
   userId: number
   movieId: number
   createdAt: number
@@ -65,16 +79,22 @@ export type ReviewCountAggregateOutputType = {
 
 export type ReviewAvgAggregateInputType = {
   rating?: true
+  pendingRating?: true
 }
 
 export type ReviewSumAggregateInputType = {
   rating?: true
+  pendingRating?: true
 }
 
 export type ReviewMinAggregateInputType = {
   id?: true
   content?: true
   rating?: true
+  pendingContent?: true
+  pendingRating?: true
+  editStatus?: true
+  editRequestedAt?: true
   userId?: true
   movieId?: true
   createdAt?: true
@@ -84,6 +104,10 @@ export type ReviewMaxAggregateInputType = {
   id?: true
   content?: true
   rating?: true
+  pendingContent?: true
+  pendingRating?: true
+  editStatus?: true
+  editRequestedAt?: true
   userId?: true
   movieId?: true
   createdAt?: true
@@ -93,6 +117,10 @@ export type ReviewCountAggregateInputType = {
   id?: true
   content?: true
   rating?: true
+  pendingContent?: true
+  pendingRating?: true
+  editStatus?: true
+  editRequestedAt?: true
   userId?: true
   movieId?: true
   createdAt?: true
@@ -189,6 +217,10 @@ export type ReviewGroupByOutputType = {
   id: string
   content: string
   rating: number
+  pendingContent: string | null
+  pendingRating: number | null
+  editStatus: $Enums.EditStatus
+  editRequestedAt: Date | null
   userId: string
   movieId: string
   createdAt: Date
@@ -221,6 +253,10 @@ export type ReviewWhereInput = {
   id?: Prisma.StringFilter<"Review"> | string
   content?: Prisma.StringFilter<"Review"> | string
   rating?: Prisma.IntFilter<"Review"> | number
+  pendingContent?: Prisma.StringNullableFilter<"Review"> | string | null
+  pendingRating?: Prisma.IntNullableFilter<"Review"> | number | null
+  editStatus?: Prisma.EnumEditStatusFilter<"Review"> | $Enums.EditStatus
+  editRequestedAt?: Prisma.DateTimeNullableFilter<"Review"> | Date | string | null
   userId?: Prisma.StringFilter<"Review"> | string
   movieId?: Prisma.StringFilter<"Review"> | string
   createdAt?: Prisma.DateTimeFilter<"Review"> | Date | string
@@ -232,6 +268,10 @@ export type ReviewOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   content?: Prisma.SortOrder
   rating?: Prisma.SortOrder
+  pendingContent?: Prisma.SortOrderInput | Prisma.SortOrder
+  pendingRating?: Prisma.SortOrderInput | Prisma.SortOrder
+  editStatus?: Prisma.SortOrder
+  editRequestedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   userId?: Prisma.SortOrder
   movieId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -246,6 +286,10 @@ export type ReviewWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.ReviewWhereInput | Prisma.ReviewWhereInput[]
   content?: Prisma.StringFilter<"Review"> | string
   rating?: Prisma.IntFilter<"Review"> | number
+  pendingContent?: Prisma.StringNullableFilter<"Review"> | string | null
+  pendingRating?: Prisma.IntNullableFilter<"Review"> | number | null
+  editStatus?: Prisma.EnumEditStatusFilter<"Review"> | $Enums.EditStatus
+  editRequestedAt?: Prisma.DateTimeNullableFilter<"Review"> | Date | string | null
   userId?: Prisma.StringFilter<"Review"> | string
   movieId?: Prisma.StringFilter<"Review"> | string
   createdAt?: Prisma.DateTimeFilter<"Review"> | Date | string
@@ -257,6 +301,10 @@ export type ReviewOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   content?: Prisma.SortOrder
   rating?: Prisma.SortOrder
+  pendingContent?: Prisma.SortOrderInput | Prisma.SortOrder
+  pendingRating?: Prisma.SortOrderInput | Prisma.SortOrder
+  editStatus?: Prisma.SortOrder
+  editRequestedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   userId?: Prisma.SortOrder
   movieId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -274,6 +322,10 @@ export type ReviewScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Review"> | string
   content?: Prisma.StringWithAggregatesFilter<"Review"> | string
   rating?: Prisma.IntWithAggregatesFilter<"Review"> | number
+  pendingContent?: Prisma.StringNullableWithAggregatesFilter<"Review"> | string | null
+  pendingRating?: Prisma.IntNullableWithAggregatesFilter<"Review"> | number | null
+  editStatus?: Prisma.EnumEditStatusWithAggregatesFilter<"Review"> | $Enums.EditStatus
+  editRequestedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Review"> | Date | string | null
   userId?: Prisma.StringWithAggregatesFilter<"Review"> | string
   movieId?: Prisma.StringWithAggregatesFilter<"Review"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Review"> | Date | string
@@ -283,6 +335,10 @@ export type ReviewCreateInput = {
   id?: string
   content: string
   rating: number
+  pendingContent?: string | null
+  pendingRating?: number | null
+  editStatus?: $Enums.EditStatus
+  editRequestedAt?: Date | string | null
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutReviewsInput
   movie: Prisma.MovieCreateNestedOneWithoutReviewsInput
@@ -292,6 +348,10 @@ export type ReviewUncheckedCreateInput = {
   id?: string
   content: string
   rating: number
+  pendingContent?: string | null
+  pendingRating?: number | null
+  editStatus?: $Enums.EditStatus
+  editRequestedAt?: Date | string | null
   userId: string
   movieId: string
   createdAt?: Date | string
@@ -301,6 +361,10 @@ export type ReviewUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   rating?: Prisma.IntFieldUpdateOperationsInput | number
+  pendingContent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pendingRating?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  editStatus?: Prisma.EnumEditStatusFieldUpdateOperationsInput | $Enums.EditStatus
+  editRequestedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutReviewsNestedInput
   movie?: Prisma.MovieUpdateOneRequiredWithoutReviewsNestedInput
@@ -310,6 +374,10 @@ export type ReviewUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   rating?: Prisma.IntFieldUpdateOperationsInput | number
+  pendingContent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pendingRating?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  editStatus?: Prisma.EnumEditStatusFieldUpdateOperationsInput | $Enums.EditStatus
+  editRequestedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   movieId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -319,6 +387,10 @@ export type ReviewCreateManyInput = {
   id?: string
   content: string
   rating: number
+  pendingContent?: string | null
+  pendingRating?: number | null
+  editStatus?: $Enums.EditStatus
+  editRequestedAt?: Date | string | null
   userId: string
   movieId: string
   createdAt?: Date | string
@@ -328,6 +400,10 @@ export type ReviewUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   rating?: Prisma.IntFieldUpdateOperationsInput | number
+  pendingContent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pendingRating?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  editStatus?: Prisma.EnumEditStatusFieldUpdateOperationsInput | $Enums.EditStatus
+  editRequestedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -335,6 +411,10 @@ export type ReviewUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   rating?: Prisma.IntFieldUpdateOperationsInput | number
+  pendingContent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pendingRating?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  editStatus?: Prisma.EnumEditStatusFieldUpdateOperationsInput | $Enums.EditStatus
+  editRequestedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   movieId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -354,6 +434,10 @@ export type ReviewCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   content?: Prisma.SortOrder
   rating?: Prisma.SortOrder
+  pendingContent?: Prisma.SortOrder
+  pendingRating?: Prisma.SortOrder
+  editStatus?: Prisma.SortOrder
+  editRequestedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   movieId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -361,12 +445,17 @@ export type ReviewCountOrderByAggregateInput = {
 
 export type ReviewAvgOrderByAggregateInput = {
   rating?: Prisma.SortOrder
+  pendingRating?: Prisma.SortOrder
 }
 
 export type ReviewMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   content?: Prisma.SortOrder
   rating?: Prisma.SortOrder
+  pendingContent?: Prisma.SortOrder
+  pendingRating?: Prisma.SortOrder
+  editStatus?: Prisma.SortOrder
+  editRequestedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   movieId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -376,6 +465,10 @@ export type ReviewMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   content?: Prisma.SortOrder
   rating?: Prisma.SortOrder
+  pendingContent?: Prisma.SortOrder
+  pendingRating?: Prisma.SortOrder
+  editStatus?: Prisma.SortOrder
+  editRequestedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   movieId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -383,6 +476,7 @@ export type ReviewMinOrderByAggregateInput = {
 
 export type ReviewSumOrderByAggregateInput = {
   rating?: Prisma.SortOrder
+  pendingRating?: Prisma.SortOrder
 }
 
 export type ReviewCreateNestedManyWithoutUserInput = {
@@ -469,10 +563,22 @@ export type ReviewUncheckedUpdateManyWithoutMovieNestedInput = {
   deleteMany?: Prisma.ReviewScalarWhereInput | Prisma.ReviewScalarWhereInput[]
 }
 
+export type EnumEditStatusFieldUpdateOperationsInput = {
+  set?: $Enums.EditStatus
+}
+
+export type NullableDateTimeFieldUpdateOperationsInput = {
+  set?: Date | string | null
+}
+
 export type ReviewCreateWithoutUserInput = {
   id?: string
   content: string
   rating: number
+  pendingContent?: string | null
+  pendingRating?: number | null
+  editStatus?: $Enums.EditStatus
+  editRequestedAt?: Date | string | null
   createdAt?: Date | string
   movie: Prisma.MovieCreateNestedOneWithoutReviewsInput
 }
@@ -481,6 +587,10 @@ export type ReviewUncheckedCreateWithoutUserInput = {
   id?: string
   content: string
   rating: number
+  pendingContent?: string | null
+  pendingRating?: number | null
+  editStatus?: $Enums.EditStatus
+  editRequestedAt?: Date | string | null
   movieId: string
   createdAt?: Date | string
 }
@@ -518,6 +628,10 @@ export type ReviewScalarWhereInput = {
   id?: Prisma.StringFilter<"Review"> | string
   content?: Prisma.StringFilter<"Review"> | string
   rating?: Prisma.IntFilter<"Review"> | number
+  pendingContent?: Prisma.StringNullableFilter<"Review"> | string | null
+  pendingRating?: Prisma.IntNullableFilter<"Review"> | number | null
+  editStatus?: Prisma.EnumEditStatusFilter<"Review"> | $Enums.EditStatus
+  editRequestedAt?: Prisma.DateTimeNullableFilter<"Review"> | Date | string | null
   userId?: Prisma.StringFilter<"Review"> | string
   movieId?: Prisma.StringFilter<"Review"> | string
   createdAt?: Prisma.DateTimeFilter<"Review"> | Date | string
@@ -527,6 +641,10 @@ export type ReviewCreateWithoutMovieInput = {
   id?: string
   content: string
   rating: number
+  pendingContent?: string | null
+  pendingRating?: number | null
+  editStatus?: $Enums.EditStatus
+  editRequestedAt?: Date | string | null
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutReviewsInput
 }
@@ -535,6 +653,10 @@ export type ReviewUncheckedCreateWithoutMovieInput = {
   id?: string
   content: string
   rating: number
+  pendingContent?: string | null
+  pendingRating?: number | null
+  editStatus?: $Enums.EditStatus
+  editRequestedAt?: Date | string | null
   userId: string
   createdAt?: Date | string
 }
@@ -569,6 +691,10 @@ export type ReviewCreateManyUserInput = {
   id?: string
   content: string
   rating: number
+  pendingContent?: string | null
+  pendingRating?: number | null
+  editStatus?: $Enums.EditStatus
+  editRequestedAt?: Date | string | null
   movieId: string
   createdAt?: Date | string
 }
@@ -577,6 +703,10 @@ export type ReviewUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   rating?: Prisma.IntFieldUpdateOperationsInput | number
+  pendingContent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pendingRating?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  editStatus?: Prisma.EnumEditStatusFieldUpdateOperationsInput | $Enums.EditStatus
+  editRequestedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   movie?: Prisma.MovieUpdateOneRequiredWithoutReviewsNestedInput
 }
@@ -585,6 +715,10 @@ export type ReviewUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   rating?: Prisma.IntFieldUpdateOperationsInput | number
+  pendingContent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pendingRating?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  editStatus?: Prisma.EnumEditStatusFieldUpdateOperationsInput | $Enums.EditStatus
+  editRequestedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   movieId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -593,6 +727,10 @@ export type ReviewUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   rating?: Prisma.IntFieldUpdateOperationsInput | number
+  pendingContent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pendingRating?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  editStatus?: Prisma.EnumEditStatusFieldUpdateOperationsInput | $Enums.EditStatus
+  editRequestedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   movieId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -601,6 +739,10 @@ export type ReviewCreateManyMovieInput = {
   id?: string
   content: string
   rating: number
+  pendingContent?: string | null
+  pendingRating?: number | null
+  editStatus?: $Enums.EditStatus
+  editRequestedAt?: Date | string | null
   userId: string
   createdAt?: Date | string
 }
@@ -609,6 +751,10 @@ export type ReviewUpdateWithoutMovieInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   rating?: Prisma.IntFieldUpdateOperationsInput | number
+  pendingContent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pendingRating?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  editStatus?: Prisma.EnumEditStatusFieldUpdateOperationsInput | $Enums.EditStatus
+  editRequestedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutReviewsNestedInput
 }
@@ -617,6 +763,10 @@ export type ReviewUncheckedUpdateWithoutMovieInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   rating?: Prisma.IntFieldUpdateOperationsInput | number
+  pendingContent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pendingRating?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  editStatus?: Prisma.EnumEditStatusFieldUpdateOperationsInput | $Enums.EditStatus
+  editRequestedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -625,6 +775,10 @@ export type ReviewUncheckedUpdateManyWithoutMovieInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   rating?: Prisma.IntFieldUpdateOperationsInput | number
+  pendingContent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pendingRating?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  editStatus?: Prisma.EnumEditStatusFieldUpdateOperationsInput | $Enums.EditStatus
+  editRequestedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -635,6 +789,10 @@ export type ReviewSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   id?: boolean
   content?: boolean
   rating?: boolean
+  pendingContent?: boolean
+  pendingRating?: boolean
+  editStatus?: boolean
+  editRequestedAt?: boolean
   userId?: boolean
   movieId?: boolean
   createdAt?: boolean
@@ -646,6 +804,10 @@ export type ReviewSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   id?: boolean
   content?: boolean
   rating?: boolean
+  pendingContent?: boolean
+  pendingRating?: boolean
+  editStatus?: boolean
+  editRequestedAt?: boolean
   userId?: boolean
   movieId?: boolean
   createdAt?: boolean
@@ -657,6 +819,10 @@ export type ReviewSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   id?: boolean
   content?: boolean
   rating?: boolean
+  pendingContent?: boolean
+  pendingRating?: boolean
+  editStatus?: boolean
+  editRequestedAt?: boolean
   userId?: boolean
   movieId?: boolean
   createdAt?: boolean
@@ -668,12 +834,16 @@ export type ReviewSelectScalar = {
   id?: boolean
   content?: boolean
   rating?: boolean
+  pendingContent?: boolean
+  pendingRating?: boolean
+  editStatus?: boolean
+  editRequestedAt?: boolean
   userId?: boolean
   movieId?: boolean
   createdAt?: boolean
 }
 
-export type ReviewOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "content" | "rating" | "userId" | "movieId" | "createdAt", ExtArgs["result"]["review"]>
+export type ReviewOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "content" | "rating" | "pendingContent" | "pendingRating" | "editStatus" | "editRequestedAt" | "userId" | "movieId" | "createdAt", ExtArgs["result"]["review"]>
 export type ReviewInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   movie?: boolean | Prisma.MovieDefaultArgs<ExtArgs>
@@ -697,6 +867,10 @@ export type $ReviewPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     id: string
     content: string
     rating: number
+    pendingContent: string | null
+    pendingRating: number | null
+    editStatus: $Enums.EditStatus
+    editRequestedAt: Date | null
     userId: string
     movieId: string
     createdAt: Date
@@ -1128,6 +1302,10 @@ export interface ReviewFieldRefs {
   readonly id: Prisma.FieldRef<"Review", 'String'>
   readonly content: Prisma.FieldRef<"Review", 'String'>
   readonly rating: Prisma.FieldRef<"Review", 'Int'>
+  readonly pendingContent: Prisma.FieldRef<"Review", 'String'>
+  readonly pendingRating: Prisma.FieldRef<"Review", 'Int'>
+  readonly editStatus: Prisma.FieldRef<"Review", 'EditStatus'>
+  readonly editRequestedAt: Prisma.FieldRef<"Review", 'DateTime'>
   readonly userId: Prisma.FieldRef<"Review", 'String'>
   readonly movieId: Prisma.FieldRef<"Review", 'String'>
   readonly createdAt: Prisma.FieldRef<"Review", 'DateTime'>

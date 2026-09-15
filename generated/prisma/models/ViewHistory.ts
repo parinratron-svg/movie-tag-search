@@ -20,14 +20,25 @@ export type ViewHistoryModel = runtime.Types.Result.DefaultSelection<Prisma.$Vie
 
 export type AggregateViewHistory = {
   _count: ViewHistoryCountAggregateOutputType | null
+  _avg: ViewHistoryAvgAggregateOutputType | null
+  _sum: ViewHistorySumAggregateOutputType | null
   _min: ViewHistoryMinAggregateOutputType | null
   _max: ViewHistoryMaxAggregateOutputType | null
+}
+
+export type ViewHistoryAvgAggregateOutputType = {
+  viewCount: number | null
+}
+
+export type ViewHistorySumAggregateOutputType = {
+  viewCount: number | null
 }
 
 export type ViewHistoryMinAggregateOutputType = {
   id: string | null
   userId: string | null
   movieId: string | null
+  viewCount: number | null
   viewedAt: Date | null
 }
 
@@ -35,6 +46,7 @@ export type ViewHistoryMaxAggregateOutputType = {
   id: string | null
   userId: string | null
   movieId: string | null
+  viewCount: number | null
   viewedAt: Date | null
 }
 
@@ -42,15 +54,25 @@ export type ViewHistoryCountAggregateOutputType = {
   id: number
   userId: number
   movieId: number
+  viewCount: number
   viewedAt: number
   _all: number
 }
 
 
+export type ViewHistoryAvgAggregateInputType = {
+  viewCount?: true
+}
+
+export type ViewHistorySumAggregateInputType = {
+  viewCount?: true
+}
+
 export type ViewHistoryMinAggregateInputType = {
   id?: true
   userId?: true
   movieId?: true
+  viewCount?: true
   viewedAt?: true
 }
 
@@ -58,6 +80,7 @@ export type ViewHistoryMaxAggregateInputType = {
   id?: true
   userId?: true
   movieId?: true
+  viewCount?: true
   viewedAt?: true
 }
 
@@ -65,6 +88,7 @@ export type ViewHistoryCountAggregateInputType = {
   id?: true
   userId?: true
   movieId?: true
+  viewCount?: true
   viewedAt?: true
   _all?: true
 }
@@ -107,6 +131,18 @@ export type ViewHistoryAggregateArgs<ExtArgs extends runtime.Types.Extensions.In
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: ViewHistoryAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: ViewHistorySumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: ViewHistoryMinAggregateInputType
@@ -137,6 +173,8 @@ export type ViewHistoryGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inte
   take?: number
   skip?: number
   _count?: ViewHistoryCountAggregateInputType | true
+  _avg?: ViewHistoryAvgAggregateInputType
+  _sum?: ViewHistorySumAggregateInputType
   _min?: ViewHistoryMinAggregateInputType
   _max?: ViewHistoryMaxAggregateInputType
 }
@@ -145,8 +183,11 @@ export type ViewHistoryGroupByOutputType = {
   id: string
   userId: string
   movieId: string
+  viewCount: number
   viewedAt: Date
   _count: ViewHistoryCountAggregateOutputType | null
+  _avg: ViewHistoryAvgAggregateOutputType | null
+  _sum: ViewHistorySumAggregateOutputType | null
   _min: ViewHistoryMinAggregateOutputType | null
   _max: ViewHistoryMaxAggregateOutputType | null
 }
@@ -173,6 +214,7 @@ export type ViewHistoryWhereInput = {
   id?: Prisma.StringFilter<"ViewHistory"> | string
   userId?: Prisma.StringFilter<"ViewHistory"> | string
   movieId?: Prisma.StringFilter<"ViewHistory"> | string
+  viewCount?: Prisma.IntFilter<"ViewHistory"> | number
   viewedAt?: Prisma.DateTimeFilter<"ViewHistory"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   movie?: Prisma.XOR<Prisma.MovieScalarRelationFilter, Prisma.MovieWhereInput>
@@ -182,6 +224,7 @@ export type ViewHistoryOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   movieId?: Prisma.SortOrder
+  viewCount?: Prisma.SortOrder
   viewedAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
   movie?: Prisma.MovieOrderByWithRelationInput
@@ -195,6 +238,7 @@ export type ViewHistoryWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.ViewHistoryWhereInput | Prisma.ViewHistoryWhereInput[]
   userId?: Prisma.StringFilter<"ViewHistory"> | string
   movieId?: Prisma.StringFilter<"ViewHistory"> | string
+  viewCount?: Prisma.IntFilter<"ViewHistory"> | number
   viewedAt?: Prisma.DateTimeFilter<"ViewHistory"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   movie?: Prisma.XOR<Prisma.MovieScalarRelationFilter, Prisma.MovieWhereInput>
@@ -204,10 +248,13 @@ export type ViewHistoryOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   movieId?: Prisma.SortOrder
+  viewCount?: Prisma.SortOrder
   viewedAt?: Prisma.SortOrder
   _count?: Prisma.ViewHistoryCountOrderByAggregateInput
+  _avg?: Prisma.ViewHistoryAvgOrderByAggregateInput
   _max?: Prisma.ViewHistoryMaxOrderByAggregateInput
   _min?: Prisma.ViewHistoryMinOrderByAggregateInput
+  _sum?: Prisma.ViewHistorySumOrderByAggregateInput
 }
 
 export type ViewHistoryScalarWhereWithAggregatesInput = {
@@ -217,11 +264,13 @@ export type ViewHistoryScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"ViewHistory"> | string
   userId?: Prisma.StringWithAggregatesFilter<"ViewHistory"> | string
   movieId?: Prisma.StringWithAggregatesFilter<"ViewHistory"> | string
+  viewCount?: Prisma.IntWithAggregatesFilter<"ViewHistory"> | number
   viewedAt?: Prisma.DateTimeWithAggregatesFilter<"ViewHistory"> | Date | string
 }
 
 export type ViewHistoryCreateInput = {
   id?: string
+  viewCount?: number
   viewedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutViewsInput
   movie: Prisma.MovieCreateNestedOneWithoutViewsInput
@@ -231,11 +280,13 @@ export type ViewHistoryUncheckedCreateInput = {
   id?: string
   userId: string
   movieId: string
+  viewCount?: number
   viewedAt?: Date | string
 }
 
 export type ViewHistoryUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   viewedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutViewsNestedInput
   movie?: Prisma.MovieUpdateOneRequiredWithoutViewsNestedInput
@@ -245,6 +296,7 @@ export type ViewHistoryUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   movieId?: Prisma.StringFieldUpdateOperationsInput | string
+  viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   viewedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -252,11 +304,13 @@ export type ViewHistoryCreateManyInput = {
   id?: string
   userId: string
   movieId: string
+  viewCount?: number
   viewedAt?: Date | string
 }
 
 export type ViewHistoryUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   viewedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -264,6 +318,7 @@ export type ViewHistoryUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   movieId?: Prisma.StringFieldUpdateOperationsInput | string
+  viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   viewedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -286,13 +341,19 @@ export type ViewHistoryCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   movieId?: Prisma.SortOrder
+  viewCount?: Prisma.SortOrder
   viewedAt?: Prisma.SortOrder
+}
+
+export type ViewHistoryAvgOrderByAggregateInput = {
+  viewCount?: Prisma.SortOrder
 }
 
 export type ViewHistoryMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   movieId?: Prisma.SortOrder
+  viewCount?: Prisma.SortOrder
   viewedAt?: Prisma.SortOrder
 }
 
@@ -300,7 +361,12 @@ export type ViewHistoryMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   movieId?: Prisma.SortOrder
+  viewCount?: Prisma.SortOrder
   viewedAt?: Prisma.SortOrder
+}
+
+export type ViewHistorySumOrderByAggregateInput = {
+  viewCount?: Prisma.SortOrder
 }
 
 export type ViewHistoryCreateNestedManyWithoutUserInput = {
@@ -389,6 +455,7 @@ export type ViewHistoryUncheckedUpdateManyWithoutMovieNestedInput = {
 
 export type ViewHistoryCreateWithoutUserInput = {
   id?: string
+  viewCount?: number
   viewedAt?: Date | string
   movie: Prisma.MovieCreateNestedOneWithoutViewsInput
 }
@@ -396,6 +463,7 @@ export type ViewHistoryCreateWithoutUserInput = {
 export type ViewHistoryUncheckedCreateWithoutUserInput = {
   id?: string
   movieId: string
+  viewCount?: number
   viewedAt?: Date | string
 }
 
@@ -432,11 +500,13 @@ export type ViewHistoryScalarWhereInput = {
   id?: Prisma.StringFilter<"ViewHistory"> | string
   userId?: Prisma.StringFilter<"ViewHistory"> | string
   movieId?: Prisma.StringFilter<"ViewHistory"> | string
+  viewCount?: Prisma.IntFilter<"ViewHistory"> | number
   viewedAt?: Prisma.DateTimeFilter<"ViewHistory"> | Date | string
 }
 
 export type ViewHistoryCreateWithoutMovieInput = {
   id?: string
+  viewCount?: number
   viewedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutViewsInput
 }
@@ -444,6 +514,7 @@ export type ViewHistoryCreateWithoutMovieInput = {
 export type ViewHistoryUncheckedCreateWithoutMovieInput = {
   id?: string
   userId: string
+  viewCount?: number
   viewedAt?: Date | string
 }
 
@@ -476,11 +547,13 @@ export type ViewHistoryUpdateManyWithWhereWithoutMovieInput = {
 export type ViewHistoryCreateManyUserInput = {
   id?: string
   movieId: string
+  viewCount?: number
   viewedAt?: Date | string
 }
 
 export type ViewHistoryUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   viewedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   movie?: Prisma.MovieUpdateOneRequiredWithoutViewsNestedInput
 }
@@ -488,23 +561,27 @@ export type ViewHistoryUpdateWithoutUserInput = {
 export type ViewHistoryUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   movieId?: Prisma.StringFieldUpdateOperationsInput | string
+  viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   viewedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ViewHistoryUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   movieId?: Prisma.StringFieldUpdateOperationsInput | string
+  viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   viewedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ViewHistoryCreateManyMovieInput = {
   id?: string
   userId: string
+  viewCount?: number
   viewedAt?: Date | string
 }
 
 export type ViewHistoryUpdateWithoutMovieInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   viewedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutViewsNestedInput
 }
@@ -512,12 +589,14 @@ export type ViewHistoryUpdateWithoutMovieInput = {
 export type ViewHistoryUncheckedUpdateWithoutMovieInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   viewedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ViewHistoryUncheckedUpdateManyWithoutMovieInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   viewedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -527,6 +606,7 @@ export type ViewHistorySelect<ExtArgs extends runtime.Types.Extensions.InternalA
   id?: boolean
   userId?: boolean
   movieId?: boolean
+  viewCount?: boolean
   viewedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   movie?: boolean | Prisma.MovieDefaultArgs<ExtArgs>
@@ -536,6 +616,7 @@ export type ViewHistorySelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   id?: boolean
   userId?: boolean
   movieId?: boolean
+  viewCount?: boolean
   viewedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   movie?: boolean | Prisma.MovieDefaultArgs<ExtArgs>
@@ -545,6 +626,7 @@ export type ViewHistorySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   id?: boolean
   userId?: boolean
   movieId?: boolean
+  viewCount?: boolean
   viewedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   movie?: boolean | Prisma.MovieDefaultArgs<ExtArgs>
@@ -554,10 +636,11 @@ export type ViewHistorySelectScalar = {
   id?: boolean
   userId?: boolean
   movieId?: boolean
+  viewCount?: boolean
   viewedAt?: boolean
 }
 
-export type ViewHistoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "movieId" | "viewedAt", ExtArgs["result"]["viewHistory"]>
+export type ViewHistoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "movieId" | "viewCount" | "viewedAt", ExtArgs["result"]["viewHistory"]>
 export type ViewHistoryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   movie?: boolean | Prisma.MovieDefaultArgs<ExtArgs>
@@ -581,6 +664,7 @@ export type $ViewHistoryPayload<ExtArgs extends runtime.Types.Extensions.Interna
     id: string
     userId: string
     movieId: string
+    viewCount: number
     viewedAt: Date
   }, ExtArgs["result"]["viewHistory"]>
   composites: {}
@@ -1010,6 +1094,7 @@ export interface ViewHistoryFieldRefs {
   readonly id: Prisma.FieldRef<"ViewHistory", 'String'>
   readonly userId: Prisma.FieldRef<"ViewHistory", 'String'>
   readonly movieId: Prisma.FieldRef<"ViewHistory", 'String'>
+  readonly viewCount: Prisma.FieldRef<"ViewHistory", 'Int'>
   readonly viewedAt: Prisma.FieldRef<"ViewHistory", 'DateTime'>
 }
     

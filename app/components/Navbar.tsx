@@ -26,7 +26,7 @@ export default async function Navbar() {
       <div className="ml-auto flex items-center gap-4 text-sm">
         <SearchBar />
         {user ? (
-          <ProfileMenu name={user.name} avatarUrl={user.avatarUrl} />
+          <ProfileMenu name={user.name} avatarUrl={user.avatarUrl} role={user.role} />
         ) : (
           <>
             <Link href="/login" className="text-white/70 hover:text-white">

@@ -106,6 +106,10 @@ export const ReviewScalarFieldEnum = {
   id: 'id',
   content: 'content',
   rating: 'rating',
+  pendingContent: 'pendingContent',
+  pendingRating: 'pendingRating',
+  editStatus: 'editStatus',
+  editRequestedAt: 'editRequestedAt',
   userId: 'userId',
   movieId: 'movieId',
   createdAt: 'createdAt'
@@ -118,6 +122,7 @@ export const ViewHistoryScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   movieId: 'movieId',
+  viewCount: 'viewCount',
   viewedAt: 'viewedAt'
 } as const
 
