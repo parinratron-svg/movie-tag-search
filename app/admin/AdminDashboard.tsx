@@ -136,9 +136,30 @@ export default function AdminDashboard({
   const [newGenres, setNewGenres] = useState("Action, Drama");
   const [newDirector, setNewDirector] = useState("");
 
+  const [syncingProviders, setSyncingProviders] = useState(false);
+
   function showNotification(text: string, type: "success" | "error" = "success") {
     setMessage({ text, type });
     setTimeout(() => setMessage(null), 3500);
+  }
+
+  async function handleSyncRealtimeProviders() {
+    setSyncingProviders(true);
+    showNotification("กำลังซิงค์ข้อมูลช่องทางรับชมเรียลไทม์จาก TMDB (ประเทศไทย)...");
+    try {
+      const res = await fetch("/api/admin/sync-providers", { method: "POST" });
+      const data = await res.json();
+      if (res.ok) {
+        showNotification(data.message || "ซิงค์ข้อมูลช่องทางรับชมเรียลไทม์เรียบร้อยแล้ว!");
+        router.refresh();
+      } else {
+        throw new Error(data.error);
+      }
+    } catch (err) {
+      showNotification("เกิดข้อผิดพลาดในการซิงค์ข้อมูล", "error");
+    } finally {
+      setSyncingProviders(false);
+    }
   }
 
   // 1. Approve Review Edit Request
@@ -578,9 +599,19 @@ export default function AdminDashboard({
           {/* TAB 1: OVERVIEW STATS */}
           {activeTab === "overview" && (
             <div className="space-y-8">
-              <div>
-                <h2 className="font-serif text-2xl font-bold text-white">ภาพรวมระบบ (Analytics Summary)</h2>
-                <p className="text-xs text-slate-400 mt-1">สรุปข้อมูลสถิติภาพรวมและการทำงานทั้งหมดในระบบ</p>
+              <div className="flex items-center justify-between">
+                <div>
+                  <h2 className="font-serif text-2xl font-bold text-white">ภาพรวมระบบ (Analytics Summary)</h2>
+                  <p className="text-xs text-slate-400 mt-1">สรุปข้อมูลสถิติภาพรวมและการทำงานทั้งหมดในระบบ</p>
+                </div>
+                <button
+                  onClick={handleSyncRealtimeProviders}
+                  disabled={syncingProviders}
+                  className="flex items-center gap-2 rounded-xl bg-amber-500/20 border border-amber-500/40 px-4 py-2.5 text-xs font-semibold text-[#E8A33D] hover:bg-amber-500/30 transition-all disabled:opacity-50"
+                >
+                  <ExternalLink className={`h-4 w-4 ${syncingProviders ? "animate-spin" : ""}`} />
+                  <span>{syncingProviders ? "กำลังซิงค์เรียลไทม์..." : "⚡ ดึงข้อมูลช่องทางรับชมเรียลไทม์ (TMDB TH)"}</span>
+                </button>
               </div>
 
               <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
