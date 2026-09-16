@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Final Presentation — Doo Arai Dee</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #090D16;
+      --bg-card: rgba(18, 26, 43, 0.75);
+      --bg-card-hover: rgba(30, 41, 69, 0.85);
+      --border-glow: rgba(56, 189, 248, 0.25);
+      --primary-cyan: #38BDF8;
+      --primary-blue: #2563EB;
+      --primary-purple: #818CF8;
+      --accent-pink: #F43F5E;
+      --accent-green: #10B981;
+      --accent-amber: #F59E0B;
+      --text-white: #F8FAFC;
+      --text-muted: #94A3B8;
+      --text-subtle: #64748B;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Prompt', 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-white);
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    @page {
+      size: 1920px 1080px;
+      margin: 0;
+    }
+
+    .slide {
+      width: 1920px;
+      height: 1080px;
+      page-break-after: always;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 70px 90px;
+      background: radial-gradient(circle at 85% 15%, rgba(37, 99, 235, 0.18), transparent 45%),
+                  radial-gradient(circle at 15% 85%, rgba(129, 140, 248, 0.15), transparent 40%),
+                  #090D16;
+    }
+
+    /* Ambient glow circles */
+    .slide::before {
+      content: '';
+      position: absolute;
+      top: -150px;
+      right: -150px;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* Header Bar */
+    .slide-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 20px;
+    }
+
+    .slide-title-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .slide-category {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--primary-cyan);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .slide-category::before {
+      content: '';
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background-color: var(--primary-cyan);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--primary-cyan);
+    }
+
+    .slide-title {
+      font-size: 42px;
+      font-weight: 700;
+      color: #FFFFFF;
+      letter-spacing: -0.5px;
+      line-height: 1.2;
+    }
+
+    .slide-course-badge {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 10px 20px;
+      border-radius: 100px;
+      font-size: 16px;
+      color: var(--text-muted);
+    }
+
+    .slide-course-badge span {
+      color: #38BDF8;
+      font-weight: 600;
+    }
+
+    /* Content Area */
+    .slide-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    /* Footer Bar */
+    .slide-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      font-size: 16px;
+      color: var(--text-subtle);
+    }
+
+    .slide-footer-left {
+      display: flex;
+      gap: 25px;
+      align-items: center;
+    }
+
+    .slide-footer-left a {
+      color: var(--primary-cyan);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .slide-number {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 4px 14px;
+      border-radius: 8px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    /* Cards & Grids */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 35px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 30px;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-glow);
+      border-radius: 20px;
+      padding: 30px;
+      backdrop-filter: blur(16px);
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+      position: relative;
+    }
+
+    .card-icon {
+      width: 54px;
+      height: 54px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(37, 99, 235, 0.2));
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: var(--primary-cyan);
+    }
+
+    .card-title {
+      font-size: 24px;
+      font-weight: 600;
+      color: #FFFFFF;
+    }
+
+    .card-desc {
+      font-size: 18px;
+      line-height: 1.6;
+      color: var(--text-muted);
+    }
+
+    .tag-badge {
+      display: inline-block;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      background: rgba(56, 189, 248, 0.12);
+      color: #38BDF8;
+      border: 1px solid rgba(56, 189, 248, 0.25);
+    }
+
+    .highlight-text {
+      color: var(--primary-cyan);
+      font-weight: 600;
+    }
+
+    /* Hero Slide 1 */
+    .hero-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 25px;
+      margin: auto 0;
+    }
+
+    .hero-badge {
+      background: linear-gradient(90deg, rgba(56, 189, 248, 0.15), rgba(129, 140, 248, 0.15));
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      padding: 10px 28px;
+      border-radius: 100px;
+      font-size: 20px;
+      font-weight: 600;
+      color: #38BDF8;
+      letter-spacing: 1px;
+    }
+
+    .hero-title {
+      font-size: 78px;
+      font-weight: 800;
+      line-height: 1.1;
+      background: linear-gradient(135deg, #FFFFFF 30%, #93C5FD 70%, #38BDF8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -1.5px;
+    }
+
+    .hero-subtitle {
+      font-size: 28px;
+      color: var(--text-muted);
+      max-width: 1200px;
+      line-height: 1.5;
+    }
+
+    .hero-team-grid {
+      display: flex;
+      gap: 35px;
+      margin-top: 25px;
+    }
+
+    .team-member-chip {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 16px 28px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      text-align: left;
+    }
+
+    .member-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #2563EB, #818CF8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      font-weight: 700;
+      color: white;
+    }
+
+    .member-info h4 {
+      font-size: 20px;
+      color: white;
+      font-weight: 600;
+    }
+
+    .member-info p {
+      font-size: 16px;
+      color: var(--primary-cyan);
+    }
+
+    /* Metric Badges */
+    .metric-box {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 18px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .metric-val {
+      font-size: 28px;
+      font-weight: 700;
+      color: #38BDF8;
+    }
+
+    .metric-lbl {
+      font-size: 16px;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== SLIDE 1: Title Slide ==================== -->
+  <div class="slide">
+    <div class="slide-header">
+      <div class="slide-category">Final Project Presentation</div>
+      <div class="slide-course-badge">
+        <span>0214321</span> Web Application Design & Development · Week 15
+      </div>
+    </div>
+
+    <div class="slide-content">
+      <div class="hero-container">
+        <div class="hero-badge">🎬 WEB APPLICATION FINAL REPORT & DEMO</div>
+        <h1 class="hero-title">Doo Arai Dee (ดูอะไรดี)</h1>
+        <p class="hero-subtitle">
+          ระบบค้นหาและแนะนำภาพยนตร์ด้วยคำค้นภาษาไทยธรรมชาติและแท็กอัจฉริยะ<br>
+          พร้อมแนะนำช่องทางรับชมสตรีมมิ่งที่ถูกลิขสิทธิ์ในไทย
+        </p>
+
+        <div class="hero-team-grid">
+          <div class="team-member-chip">
+            <div class="member-avatar">1</div>
+            <div class="member-info">
+              <h4>ปริญญาธรณ์ นาคิน</h4>
+              <p>รหัสนิสิต: 6720210043 (Auth, Search & UI)</p>
+            </div>
+          </div>
+          <div class="team-member-chip">
+            <div class="member-avatar" style="background: linear-gradient(135deg, #059669, #10B981);">2</div>
+            <div class="member-info">
+              <h4>กิตติศักดิ์ นวลประจักร์</h4>
+              <p>รหัสนิสิต: 6720210100 (Review, Admin & DevOps)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <div class="slide-footer-left">
+        <span>🌐 Live Demo: <a href="https://dooaraidee.online/">https://dooaraidee.online/</a></span>
+        <span>📦 GitHub: <a href="https://github.com/parinratron-svg/movie-tag-search">parinratron-svg/movie-tag-search</a></span>
+      </div>
+      <div class="slide-number">01 / 08</div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 2: Problem & Motivation ==================== -->
+  <div class="slide">
+    <div class="slide-header">
+      <div class="slide-title-wrap">
+        <div class="slide-category">Problem Statement & Motivation</div>
+        <h2 class="slide-title">ปัญหาและความท้าทายของผู้ใช้ในการเลือกดูภาพยนตร์</h2>
+      </div>
+      <div class="slide-course-badge">Why Doo Arai Dee?</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-3">
+        <div class="card" style="border-color: rgba(244, 63, 94, 0.3);">
+          <div class="card-icon" style="background: rgba(244, 63, 94, 0.15); color: #F43F5E; border-color: rgba(244, 63, 94, 0.3);">❌</div>
+          <h3 class="card-title">ติดกับดักหมวดหมู่เดิมๆ (Single Genre Limit)</h3>
+          <p class="card-desc">
+            เว็บดูหนังทั่วไปบังคับให้เลือกได้แค่หมวดหมู่เดียว เช่น "แอ็กชัน" หรือ "ตลก" ไม่สามารถค้นหาแบบผสมผสานหลายความรู้สึกได้
+          </p>
+          <div class="tag-badge" style="background: rgba(244, 63, 94, 0.1); color: #FDA4AF; border-color: rgba(244, 63, 94, 0.2);">
+            จำกัดจินตนาการค้นหา
+          </div>
+        </div>
+
+        <div class="card" style="border-color: rgba(245, 158, 11, 0.3);">
+          <div class="card-icon" style="background: rgba(245, 158, 11, 0.15); color: #F59E0B; border-color: rgba(245, 158, 11, 0.3);">⚠️</div>
+          <h3 class="card-title">ไม่รองรับภาษาไทยธรรมชาติ (Natural Thai Search)</h3>
+          <p class="card-desc">
+            คนไทยค้นหาด้วยประโยค เช่น <span class="highlight-text">"ผู้หญิงถือปืนต่างโลก"</span> หรือ <span class="highlight-text">"ตลกคลายเครียด"</span> แต่ฐานข้อมูลสากลใช้แต่ Keyword ภาษาอังกฤษ ทำให้หาไม่เจอ
+          </p>
+          <div class="tag-badge" style="background: rgba(245, 158, 11, 0.1); color: #FDE68A; border-color: rgba(245, 158, 11, 0.2);">
+            กำแพงภาษา & คีย์เวิร์ด
+          </div>
+        </div>
+
+        <div class="card" style="border-color: rgba(129, 140, 248, 0.3);">
+          <div class="card-icon" style="background: rgba(129, 140, 248, 0.15); color: #818CF8; border-color: rgba(129, 140, 248, 0.3);">🔍</div>
+          <h3 class="card-title">ไม่รู้ว่าดูได้ที่ไหนอย่างถูกลิขสิทธิ์ (Where to Watch)</h3>
+          <p class="card-desc">
+            เมื่อเจอหนังที่ชอบ ต้องเสียเวลาสลับไปค้นใน Netflix, Prime, Disney+ ทีละแอป เพื่อเช็คว่ามีฉายที่ไหนและต้องเสียเงินเพิ่มหรือไม่
+          </p>
+          <div class="tag-badge" style="background: rgba(129, 140, 248, 0.1); color: #C7D2FE; border-color: rgba(129, 140, 248, 0.2);">
+            เสียเวลาเปิดหาหลายแอป
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <div class="slide-footer-left"><span>0214321 Web Application Final Presentation</span></div>
+      <div class="slide-number">02 / 08</div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 3: Solution & Core Innovation ==================== -->
+  <div class="slide">
+    <div class="slide-header">
+      <div class="slide-title-wrap">
+        <div class="slide-category">Core Solution & Innovation</div>
+        <h2 class="slide-title">นวัตกรรมการค้นหาและแนะนำภาพยนตร์อัจฉริยะ</h2>
+      </div>
+      <div class="slide-course-badge">Smart Search Engine</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-icon">🧠</div>
+          <h3 class="card-title">Thai Tag Dictionary & Fuzzy Match</h3>
+          <p class="card-desc">
+            สร้างคลังคำศัพท์ภาษาไทย เชื่อมโยงความรู้สึกและบริบทไทยเข้ากับ Keyword ระดับสากล พร้อมใช้ <strong>Fuse.js + Levenshtein distance</strong> ตรวจจับคำสะกดผิด ทำให้ผู้ใช้พิมพ์อะไรก็เจอหนังที่ตรงใจ
+          </p>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px;">
+            <span class="tag-badge">Thai Synonyms</span>
+            <span class="tag-badge">Levenshtein Distance</span>
+            <span class="tag-badge">Weight Tuning</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">📺</div>
+          <h3 class="card-title">Where to Watch & Trailer All-in-One</h3>
+          <p class="card-desc">
+            ดึงข้อมูลสตรีมมิ่งที่ถูกลิขสิทธิ์ในประเทศไทยจาก <strong>TMDb Watch Providers</strong> พร้อมลิงก์ตรงไปยัง Netflix, Disney+, Prime Video, TrueID และฝัง YouTube Trailer ดูตัวอย่างได้ทันทีในหน้าเดียว
+          </p>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px;">
+            <span class="tag-badge">Netflix</span>
+            <span class="tag-badge">Disney+</span>
+            <span class="tag-badge">Prime Video</span>
+            <span class="tag-badge">YouTube Embed</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <div class="slide-footer-left"><span>Doo Arai Dee · Solution Architecture</span></div>
+      <div class="slide-number">03 / 08</div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 4: Key Features ==================== -->
+  <div class="slide">
+    <div class="slide-header">
+      <div class="slide-title-wrap">
+        <div class="slide-category">Key Features & Capabilities</div>
+        <h2 class="slide-title">ฟีเจอร์หลัก 8 ด้านที่พัฒนาและใช้งานได้จริง</h2>
+      </div>
+      <div class="slide-course-badge">Full Feature Set</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-4">
+        <div class="card" style="padding: 24px;">
+          <div class="card-icon" style="width: 44px; height: 44px; font-size: 20px;">🔐</div>
+          <h4 style="font-size: 20px; font-weight: 600; color: #FFF;">1. Authentication</h4>
+          <p style="font-size: 15px; color: var(--text-muted); line-height: 1.5;">
+            Register/Login/Logout ผ่าน Jose JWT + HTTP-only Cookie เข้ารหัสด้วย bcrypt
+          </p>
+        </div>
+
+        <div class="card" style="padding: 24px;">
+          <div class="card-icon" style="width: 44px; height: 44px; font-size: 20px;">🔍</div>
+          <h4 style="font-size: 20px; font-weight: 600; color: #FFF;">2. Smart Tag Search</h4>
+          <p style="font-size: 15px; color: var(--text-muted); line-height: 1.5;">
+            ค้นหาด้วยภาษาไทยธรรมชาติ แปลง Tag และจัดลำดับ Relevance Score
+          </p>
+        </div>
+
+        <div class="card" style="padding: 24px;">
+          <div class="card-icon" style="width: 44px; height: 44px; font-size: 20px;">⭐</div>
+          <h4 style="font-size: 20px; font-weight: 600; color: #FFF;">3. Review CRUD</h4>
+          <p style="font-size: 15px; color: var(--text-muted); line-height: 1.5;">
+            เขียน ให้คะแนน 1-5 ดาว แก้ไข และลบรีวิว พร้อม Request Edit รออนุมัติ
+          </p>
+        </div>
+
+        <div class="card" style="padding: 24px;">
+          <div class="card-icon" style="width: 44px; height: 44px; font-size: 20px;">📺</div>
+          <h4 style="font-size: 20px; font-weight: 600; color: #FFF;">4. Where to Watch</h4>
+          <p style="font-size: 15px; color: var(--text-muted); line-height: 1.5;">
+            แนะนำช่องทางดูถูกลิขสิทธิ์ในไทยจาก TMDb พร้อมลิงก์ตรงไปยังแอป
+          </p>
+        </div>
+
+        <div class="card" style="padding: 24px;">
+          <div class="card-icon" style="width: 44px; height: 44px; font-size: 20px;">🎲</div>
+          <h4 style="font-size: 20px; font-weight: 600; color: #FFF;">5. Random Picker</h4>
+          <p style="font-size: 15px; color: var(--text-muted); line-height: 1.5;">
+            ระบบสุ่มภาพยนตร์สำหรับผู้ใช้ที่ตัดสินใจไม่ได้ มีเอฟเฟกต์แอนิเมชัน
+          </p>
+        </div>
+
+        <div class="card" style="padding: 24px;">
+          <div class="card-icon" style="width: 44px; height: 44px; font-size: 20px;">💖</div>
+          <h4 style="font-size: 20px; font-weight: 600; color: #FFF;">6. Watchlist & Favs</h4>
+          <p style="font-size: 15px; color: var(--text-muted); line-height: 1.5;">
+            บันทึกหนังที่จะดูภายหลังและหนังเรื่องโปรด แยกส่วนบุคคลใน Profile
+          </p>
+        </div>
+
+        <div class="card" style="padding: 24px;">
+          <div class="card-icon" style="width: 44px; height: 44px; font-size: 20px;">🛡️</div>
+          <h4 style="font-size: 20px; font-weight: 600; color: #FFF;">7. Admin Dashboard</h4>
+          <p style="font-size: 15px; color: var(--text-muted); line-height: 1.5;">
+            จัดการเพิ่ม/ลบหนัง ดูแลผู้ใช้ และ Moderation อนุมัติการแก้ไขรีวิว
+          </p>
+        </div>
+
+        <div class="card" style="padding: 24px;">
+          <div class="card-icon" style="width: 44px; height: 44px; font-size: 20px;">📊</div>
+          <h4 style="font-size: 20px; font-weight: 600; color: #FFF;">8. Click Analytics</h4>
+          <p style="font-size: 15px; color: var(--text-muted); line-height: 1.5;">
+            บันทึกสถิติยอดการเข้าชมหนังและประวัติการคลิกไปยังสตรีมมิ่งจริง
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <div class="slide-footer-left"><span>8 Completed Core Modules</span></div>
+      <div class="slide-number">04 / 08</div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 5: Tech Stack & Architecture ==================== -->
+  <div class="slide">
+    <div class="slide-header">
+      <div class="slide-title-wrap">
+        <div class="slide-category">System Architecture & Tech Stack</div>
+        <h2 class="slide-title">สถาปัตยกรรมระบบและเทคโนโลยีระดับ Full-Stack</h2>
+      </div>
+      <div class="slide-course-badge">Modern Tech Stack</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-icon">⚡</div>
+          <h3 class="card-title">Frontend & UI</h3>
+          <p class="card-desc">
+            • <strong>Next.js 16 (App Router)</strong> & <strong>React 19</strong><br>
+            • <strong>TypeScript</strong> Type-safe 100%<br>
+            • <strong>Tailwind CSS v4</strong> Responsive UI<br>
+            • <strong>Lucide React</strong> Modern Icons
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">⚙️</div>
+          <h3 class="card-title">Backend & Data</h3>
+          <p class="card-desc">
+            • <strong>Route Handlers (`/api/*`)</strong><br>
+            • <strong>Prisma ORM v6</strong> Query API<br>
+            • <strong>PostgreSQL</strong> (Neon Serverless)<br>
+            • <strong>Zod</strong> Input Schema Validation
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">🚀</div>
+          <h3 class="card-title">Infra & Deploy</h3>
+          <p class="card-desc">
+            • <strong>Cloud VPS Ubuntu Linux</strong><br>
+            • <strong>Nginx Reverse Proxy</strong> + SSL<br>
+            • <strong>PM2</strong> Zero-Downtime Reload<br>
+            • <strong>Automated `deploy.sh` Script</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <div class="slide-footer-left"><span>Clean Architecture · Separation of Concerns</span></div>
+      <div class="slide-number">05 / 08</div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 6: Security & Quality ==================== -->
+  <div class="slide">
+    <div class="slide-header">
+      <div class="slide-title-wrap">
+        <div class="slide-category">Security & Technical Quality</div>
+        <h2 class="slide-title">มาตรการความปลอดภัยและคุณภาพทางเทคนิค (Week 10)</h2>
+      </div>
+      <div class="slide-course-badge">Security Certified</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-2">
+        <div class="card">
+          <div style="display: flex; align-items: center; gap: 15px;">
+            <div class="card-icon" style="background: rgba(16, 185, 129, 0.15); color: #10B981; border-color: rgba(16, 185, 129, 0.3);">✓</div>
+            <h3 class="card-title">Password Hashing & Session</h3>
+          </div>
+          <p class="card-desc">
+            เข้ารหัสรหัสผ่านด้วย <strong>bcrypt.hash(..., 10)</strong> ไม่มีเก็บ plain text และใช้ JWT ใน <strong>HTTP-only Secure Cookie</strong> ป้องกันการขโมย Token ผ่าน XSS
+          </p>
+        </div>
+
+        <div class="card">
+          <div style="display: flex; align-items: center; gap: 15px;">
+            <div class="card-icon" style="background: rgba(16, 185, 129, 0.15); color: #10B981; border-color: rgba(16, 185, 129, 0.3);">✓</div>
+            <h3 class="card-title">SQL Injection & XSS Prevention</h3>
+          </div>
+          <p class="card-desc">
+            ใช้ <strong>Prisma Parameterized Queries 100%</strong> ปราศจาก Raw SQL ที่เสี่ยงต่อ SQLi และไม่ใช้ `dangerouslySetInnerHTML` กับข้อมูลจากผู้ใช้
+          </p>
+        </div>
+
+        <div class="card">
+          <div style="display: flex; align-items: center; gap: 15px;">
+            <div class="card-icon" style="background: rgba(16, 185, 129, 0.15); color: #10B981; border-color: rgba(16, 185, 129, 0.3);">✓</div>
+            <h3 class="card-title">Zod Schema Validation</h3>
+          </div>
+          <p class="card-desc">
+            ตรวจสอบรูปแบบ Email, ความยาว Password, ช่วงคะแนนรีวิว (1-5) และ Body ทุก Endpoint ก่อนเข้าสู่ฐานข้อมูล
+          </p>
+        </div>
+
+        <div class="card">
+          <div style="display: flex; align-items: center; gap: 15px;">
+            <div class="card-icon" style="background: rgba(16, 185, 129, 0.15); color: #10B981; border-color: rgba(16, 185, 129, 0.3);">✓</div>
+            <h3 class="card-title">Authorization & IDOR Protection</h3>
+          </div>
+          <p class="card-desc">
+            ตรวจสอบสิทธิ์ว่า User เป็นเจ้าของรีวิว/Watchlist จริงหรือไม่ก่อนทำ Mutation และแยกระดับสิทธิ์ <strong>USER vs ADMIN</strong> อย่างเคร่งครัด
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <div class="slide-footer-left"><span>OWASP Standard Web Security</span></div>
+      <div class="slide-number">06 / 08</div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 7: Team Contribution & Reflection ==================== -->
+  <div class="slide">
+    <div class="slide-header">
+      <div class="slide-title-wrap">
+        <div class="slide-category">Team Reflection & Contribution</div>
+        <h2 class="slide-title">บทบาทหน้าที่และการสะท้อนผลการเรียนรู้ของสมาชิก</h2>
+      </div>
+      <div class="slide-course-badge">5 Points Reflection</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-2">
+        <div class="card">
+          <div style="display: flex; align-items: center; gap: 16px;">
+            <div class="member-avatar">1</div>
+            <div>
+              <h3 style="font-size: 22px; color: #FFF;">ปริญญาธรณ์ นาคิน</h3>
+              <p style="font-size: 15px; color: var(--primary-cyan);">รหัสนิสิต: 6720210043</p>
+            </div>
+          </div>
+          <div style="font-size: 16px; line-height: 1.6; color: var(--text-muted);">
+            <p><strong>🎯 บทบาท:</strong> Authentication, Smart Multi-tag Search, Movie List/Details, Random Picker, Watchlist/Favorites</p>
+            <p style="margin-top: 8px;"><strong>💡 สิ่งที่ได้เรียนรู้:</strong> การจัดการ State ใน React 19 / Next.js App Router, การทำ Responsive Design, และการประยุกต์ใช้อัลกอริทึม Levenshtein กับคำค้นภาษาไทย</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div style="display: flex; align-items: center; gap: 16px;">
+            <div class="member-avatar" style="background: linear-gradient(135deg, #059669, #10B981);">2</div>
+            <div>
+              <h3 style="font-size: 22px; color: #FFF;">กิตติศักดิ์ นวลประจักร์</h3>
+              <p style="font-size: 15px; color: #10B981;">รหัสนิสิต: 6720210100</p>
+            </div>
+          </div>
+          <div style="font-size: 16px; line-height: 1.6; color: var(--text-muted);">
+            <p><strong>🎯 บทบาท:</strong> Review CRUD & Rating System, Where to Watch (TMDb), Admin Dashboard, Review Moderation, DevOps Deploy</p>
+            <p style="margin-top: 8px;"><strong>💡 สิ่งที่ได้เรียนรู้:</strong> การออกแบบ Schema และ Relation บน Prisma ORM, การจัดการสิทธิ์ Role-Based Access Control และการดูแล Linux VPS ด้วย Nginx & PM2</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <div class="slide-footer-left"><span>Collaboration & Individual Contribution</span></div>
+      <div class="slide-number">07 / 08</div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 8: Live Demo & Q&A ==================== -->
+  <div class="slide">
+    <div class="slide-header">
+      <div class="slide-title-wrap">
+        <div class="slide-category">Live Demonstration & Conclusion</div>
+        <h2 class="slide-title">การสาธิตระบบจริง (Live Demo) & ถาม-ตอบ (Q&A)</h2>
+      </div>
+      <div class="slide-course-badge">Ready for Demo</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="hero-container" style="gap: 30px;">
+        <div style="font-size: 80px;">🎬 ✨</div>
+        <h2 style="font-size: 52px; font-weight: 700; color: #FFF;">
+          เข้าชมและทดลองใช้งานระบบจริงได้ที่
+        </h2>
+        <a href="https://dooaraidee.online/" style="font-size: 38px; color: var(--primary-cyan); font-weight: 700; text-decoration: none; background: rgba(56, 189, 248, 0.12); padding: 14px 40px; border-radius: 100px; border: 1px solid rgba(56, 189, 248, 0.4);">
+          👉 https://dooaraidee.online/ 👈
+        </a>
+
+        <div style="display: flex; gap: 30px; margin-top: 15px;">
+          <div class="metric-box" style="gap: 20px;">
+            <div class="metric-lbl">GitHub Repository:</div>
+            <div class="metric-val" style="font-size: 20px;">parinratron-svg/movie-tag-search</div>
+          </div>
+          <div class="metric-box" style="gap: 20px;">
+            <div class="metric-lbl">Status:</div>
+            <div class="metric-val" style="font-size: 20px; color: #10B981;">● Online & Production Ready</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <div class="slide-footer-left"><span>ขอขอบคุณอาจารย์และเพื่อนๆ ทุกท่านครับ · Q&A Session</span></div>
+      <div class="slide-number">08 / 08</div>
+    </div>
+  </div>
+
+</body>
+</html>
