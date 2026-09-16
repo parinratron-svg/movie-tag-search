@@ -42,6 +42,8 @@ yarn-error.log*
 next-env.d.ts
 node_modules/
 dist/
-.env
-
 /src/generated/prisma
+generated/
+~$*
+*.tmp*
+movie-tag-search/
