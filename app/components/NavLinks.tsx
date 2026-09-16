@@ -14,7 +14,7 @@ export default function NavLinks() {
   const pathname = usePathname();
 
   return (
-    <nav className="hidden items-center gap-1 sm:flex">
+    <nav className="order-last flex w-full items-center justify-around gap-1 sm:order-none sm:w-auto sm:justify-start">
       {links.map(({ href, label, icon: Icon }) => {
         const isActive =
           href === "/" ? pathname === "/" : pathname.startsWith(href);
@@ -23,14 +23,14 @@ export default function NavLinks() {
           <Link
             key={href}
             href={href}
-            className={`group relative flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm transition-colors ${
+            className={`group relative flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs transition-colors sm:px-3 sm:py-2 sm:text-sm ${
               isActive
                 ? "text-[#E8A33D]"
                 : "text-white/60 hover:text-white"
             }`}
           >
             <Icon className="h-3.5 w-3.5" />
-            {label}
+            <span className="hidden sm:inline">{label}</span>
             <span
               className={`absolute inset-x-3 -bottom-[1px] h-[2px] rounded-full bg-[#E8A33D] transition-all duration-300 ${
                 isActive ? "opacity-100" : "opacity-0 group-hover:opacity-40"

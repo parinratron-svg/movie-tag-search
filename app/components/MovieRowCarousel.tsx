@@ -66,7 +66,7 @@ export default function MovieRowCarousel({
 
       <div
         ref={scrollRef}
-        className="scrollbar-hide flex gap-4 overflow-x-auto scroll-smooth px-6 pb-2 sm:px-10"
+        className="scrollbar-hide flex gap-3 overflow-x-auto scroll-smooth px-3 pb-2 sm:gap-4 sm:px-10"
         style={{ scrollSnapType: autoScroll ? "none" : "x mandatory" }}
       >
         {movies.map((movie) => (
@@ -106,7 +106,7 @@ function MovieCard({ movie }: { movie: MovieCardData }) {
   return (
     <Link
       href={`/movies/${movie.id}`}
-      className="group relative w-[45%] shrink-0 sm:w-[22%] md:w-[16%]"
+      className="group relative w-[44vw] max-w-[220px] shrink-0 sm:w-[22%] md:w-[16%]"
       style={{ scrollSnapAlign: "start" }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
@@ -118,7 +118,7 @@ function MovieCard({ movie }: { movie: MovieCardData }) {
             src={`https://image.tmdb.org/t/p/w500${movie.posterPath}`}
             alt={movie.title}
             fill
-            sizes="(max-width: 640px) 45vw, (max-width: 1024px) 22vw, 16vw"
+            sizes="(max-width: 640px) 44vw, (max-width: 1024px) 22vw, 16vw"
             className="object-cover transition-transform duration-500 group-hover:scale-105"
           />
         ) : (

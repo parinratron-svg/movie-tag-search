@@ -18,9 +18,9 @@ const PROVIDERS = [
 
 export default function ProviderFilterBar({ activeProvider }: Props) {
   return (
-    <div className="mx-auto max-w-7xl px-6 sm:px-10 mt-6">
-      <div className="flex flex-wrap items-center gap-2 rounded-2xl border border-white/10 bg-white/5 p-3 backdrop-blur-md">
-        <div className="flex items-center gap-2 pr-3 border-r border-white/10 text-xs font-semibold text-[#E8A33D]">
+    <div className="mx-auto mt-6 max-w-7xl px-3 sm:px-10">
+      <div className="flex flex-wrap items-center gap-2 rounded-2xl border border-white/10 bg-white/5 p-2.5 backdrop-blur-md sm:p-3">
+        <div className="flex items-center gap-2 border-r-0 pr-1 text-xs font-semibold text-[#E8A33D] sm:border-r sm:border-white/10 sm:pr-3">
           <PlayCircle className="h-4 w-4" />
           <span className="hidden sm:inline">เลือกตามแพลตฟอร์ม:</span>
         </div>

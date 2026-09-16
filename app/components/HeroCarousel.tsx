@@ -28,8 +28,8 @@ export default function HeroCarousel({ movies }: { movies: MovieCardData[] }) {
   if (movies.length === 0) return null;
 
   return (
-    <section className="relative mx-4 mt-4 overflow-hidden rounded-lg shadow-2xl shadow-black/60 sm:mx-8 sm:mt-6">
-      <div className="relative h-[380px] w-full sm:h-[480px]">
+    <section className="relative mx-3 mt-3 overflow-hidden rounded-lg shadow-2xl shadow-black/60 sm:mx-8 sm:mt-6">
+      <div className="relative h-[360px] w-full sm:h-[480px]">
         {movies.map((movie, i) => {
           const backdropUrl = movie.posterPath
             ? `https://image.tmdb.org/t/p/w1280${movie.posterPath}`
@@ -57,11 +57,11 @@ export default function HeroCarousel({ movies }: { movies: MovieCardData[] }) {
               <div className="absolute inset-0 bg-gradient-to-r from-[#0F1115] via-[#0F1115]/70 to-transparent" />
               <div className="absolute inset-0 bg-gradient-to-t from-[#0F1115]/90 via-transparent to-transparent" />
 
-              <div className="absolute inset-0 flex flex-col justify-center px-8 sm:px-12">
+              <div className="absolute inset-0 flex flex-col justify-center px-5 sm:px-12">
                 <p className="text-sm font-medium tracking-wide text-[#E8A33D]">
                   แนะนำหนังประจำสัปดาห์
                 </p>
-                <h1 className="mt-2 max-w-xl font-serif text-4xl drop-shadow-lg sm:text-5xl">
+                <h1 className="mt-2 max-w-[85%] font-serif text-3xl leading-tight drop-shadow-lg sm:max-w-xl sm:text-5xl">
                   {movie.title}
                 </h1>
                 <div className="mt-3 flex items-center gap-3 text-sm text-white/80">

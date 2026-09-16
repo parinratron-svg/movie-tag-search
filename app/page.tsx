@@ -100,8 +100,8 @@ function MovieRow({ title, movies }: { title: string; movies: MovieCardData[] })
 
   return (
     <section className="py-8">
-      <div className="mb-5 flex items-baseline justify-between px-6 sm:px-10">
-        <h2 className="font-serif text-xl">{title}</h2>
+      <div className="mb-5 flex items-baseline justify-between px-3 sm:px-10">
+        <h2 className="font-serif text-lg sm:text-xl">{title}</h2>
         <Link href="/movies" className="text-sm text-[#E8A33D] hover:underline">
           ดูทั้งหมด
         </Link>
