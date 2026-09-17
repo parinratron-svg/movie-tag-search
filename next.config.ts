@@ -9,6 +9,13 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  // Copy Prisma query engine files for both Windows (local) and Linux (Vercel)
+  outputFileTracingIncludes: {
+    "/**": [
+      "./generated/prisma/**/*.node",
+      "./node_modules/.prisma/client/*.node",
+    ],
+  },
 };
 
 export default nextConfig;
