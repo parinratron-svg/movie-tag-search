@@ -23,7 +23,7 @@ const config: runtime.GetPrismaClientConfig = {
       "value": "prisma-client"
     },
     "output": {
-      "value": "D:\\Doo Arai Dee\\movie-tag-search\\generated\\prisma",
+      "value": "C:\\Users\\koonb\\.gemini\\antigravity\\scratch\\movie-tag-search\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -37,7 +37,7 @@ const config: runtime.GetPrismaClientConfig = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "D:\\Doo Arai Dee\\movie-tag-search\\prisma\\schema.prisma",
+    "sourceFilePath": "C:\\Users\\koonb\\.gemini\\antigravity\\scratch\\movie-tag-search\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativePath": "../../prisma",

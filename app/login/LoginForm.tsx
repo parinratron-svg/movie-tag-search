@@ -123,6 +123,10 @@ export default function LoginForm() {
           สมัครสมาชิก
         </Link>
       </p>
+
+      <p className="mt-3 text-center text-[10px] leading-normal text-white/25 border-t border-white/5 pt-3">
+        * บัญชีนี้สำหรับใช้งานเฉพาะบนเว็บไซต์ Doo Arai Dee เท่านั้น ไม่มีความเกี่ยวข้องกับบัญชีสมาชิกของ Netflix, Disney+, Prime Video หรือผู้ให้บริการสตรีมมิ่งใดๆ
+      </p>
       </div>
 
       {showTransition && <AuthLoadingOverlay />}

@@ -17,7 +17,10 @@ export default function Footer() {
           The Movie Database (TMDB)
         </Link>
       </p>
-      <p className="mt-1 text-[11px] text-white/20">
+      <p className="mt-2 max-w-2xl mx-auto text-[11px] leading-relaxed text-white/25">
+        ข้อความปฏิเสธความรับผิดชอบ: Doo Arai Dee เป็นเว็บไซต์แนะนำภาพยนตร์ ดรรชนีค้นหา และชี้เป้าลิงก์รับชมถูกลิขสิทธิ์เท่านั้น ไม่ใช่บริการสตรีมมิ่งวิดีโอ และไม่มีความเกี่ยวข้องหรือแอบอ้างเป็นผู้ให้บริการอย่างเป็นทางการของ Netflix, Disney+, Prime Video, HBO GO หรือค่ายใดๆ บัญชีสมาชิกใช้สำหรับเข้าสู่ระบบภายในเว็บนี้เท่านั้น
+      </p>
+      <p className="mt-1 text-[10px] text-white/20">
         This product uses the TMDB API but is not endorsed or certified by TMDB.
       </p>
     </footer>
