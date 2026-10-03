@@ -9,7 +9,19 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const tag = searchParams.get("tag");
 
-    const where: any = {};
+    // โพสต์มีอายุ 7 วัน: ลบโพสต์เก่าที่เกิน 7 วันอัตโนมัติ
+    const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+    try {
+      await prisma.post.deleteMany({
+        where: { createdAt: { lt: sevenDaysAgo } },
+      });
+    } catch (e) {
+      console.warn("Auto-clean expired posts warning:", e);
+    }
+
+    const where: any = {
+      createdAt: { gte: sevenDaysAgo },
+    };
     if (tag) {
       where.tags = { has: tag };
     }

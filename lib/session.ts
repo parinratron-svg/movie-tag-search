@@ -28,7 +28,10 @@ export async function getCurrentUser() {
       });
       return user;
     }
-  } catch (error) {
+  } catch (error: any) {
+    if (error && typeof error === "object" && "digest" in error) {
+      throw error;
+    }
     console.error("Error in getCurrentUser:", error);
     return null;
   }

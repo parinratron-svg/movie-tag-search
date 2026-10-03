@@ -11,9 +11,11 @@ export const metadata = {
 
 export default async function CommunityPage() {
   const currentUser = await getCurrentUser();
+  const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
 
-  // ดึงรายการโพสต์
+  // ดึงรายการโพสต์ (เฉพาะโพสต์ที่มีอายุไม่เกิน 7 วัน)
   const rawPosts = await prisma.post.findMany({
+    where: { createdAt: { gte: sevenDaysAgo } },
     orderBy: { createdAt: "desc" },
     take: 30,
     include: {
@@ -30,7 +32,7 @@ export default async function CommunityPage() {
           voteAverage: true,
         },
       },
-      likes: currentUser ? { where: { userId: currentUser.id }, select: { id: true } } : false,
+      ...(currentUser ? { likes: { where: { userId: currentUser.id }, select: { id: true } } } : {}),
       _count: {
         select: {
           likes: true,
@@ -40,18 +42,21 @@ export default async function CommunityPage() {
     },
   });
 
-  const posts = rawPosts.map((p) => ({
-    id: p.id,
-    title: p.title,
-    content: p.content,
-    tags: p.tags,
-    createdAt: p.createdAt.toISOString(),
-    user: p.user,
-    movie: p.movie,
-    likesCount: p._count.likes,
-    commentsCount: p._count.comments,
-    hasLiked: currentUser ? p.likes && p.likes.length > 0 : false,
-  }));
+  const posts = rawPosts.map((p) => {
+    const postWithLikes = p as typeof p & { likes?: { id: string }[] };
+    return {
+      id: p.id,
+      title: p.title,
+      content: p.content,
+      tags: p.tags,
+      createdAt: p.createdAt.toISOString(),
+      user: p.user,
+      movie: p.movie,
+      likesCount: p._count.likes,
+      commentsCount: p._count.comments,
+      hasLiked: Boolean(currentUser && postWithLikes.likes && postWithLikes.likes.length > 0),
+    };
+  });
 
   // ดึงโพสต์ยอดนิยมสำหรับ Sidebar
   const rawTrending = await prisma.post.findMany({
