@@ -88,3 +88,18 @@ export type Watchlist = Prisma.WatchlistModel
  * 
  */
 export type ProviderClick = Prisma.ProviderClickModel
+/**
+ * Model Post
+ * 
+ */
+export type Post = Prisma.PostModel
+/**
+ * Model PostLike
+ * 
+ */
+export type PostLike = Prisma.PostLikeModel
+/**
+ * Model Comment
+ * 
+ */
+export type Comment = Prisma.CommentModel

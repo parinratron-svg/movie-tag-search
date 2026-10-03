@@ -2,12 +2,13 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Film, Search } from "lucide-react";
+import { Home, Film, Search, Users } from "lucide-react";
 
 const links = [
   { href: "/", label: "หน้าแรก", icon: Home },
   { href: "/movies", label: "หนังทั้งหมด", icon: Film },
   { href: "/search", label: "ค้นหา", icon: Search },
+  { href: "/community", label: "โซเชียลเบต้า", icon: Users, badge: "BETA" },
 ];
 
 export default function NavLinks() {

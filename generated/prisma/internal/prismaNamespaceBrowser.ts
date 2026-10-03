@@ -56,7 +56,10 @@ export const ModelName = {
   Review: 'Review',
   ViewHistory: 'ViewHistory',
   Watchlist: 'Watchlist',
-  ProviderClick: 'ProviderClick'
+  ProviderClick: 'ProviderClick',
+  Post: 'Post',
+  PostLike: 'PostLike',
+  Comment: 'Comment'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -173,6 +176,41 @@ export const ProviderClickScalarFieldEnum = {
 } as const
 
 export type ProviderClickScalarFieldEnum = (typeof ProviderClickScalarFieldEnum)[keyof typeof ProviderClickScalarFieldEnum]
+
+
+export const PostScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  content: 'content',
+  tags: 'tags',
+  userId: 'userId',
+  movieId: 'movieId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PostScalarFieldEnum = (typeof PostScalarFieldEnum)[keyof typeof PostScalarFieldEnum]
+
+
+export const PostLikeScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  postId: 'postId',
+  createdAt: 'createdAt'
+} as const
+
+export type PostLikeScalarFieldEnum = (typeof PostLikeScalarFieldEnum)[keyof typeof PostLikeScalarFieldEnum]
+
+
+export const CommentScalarFieldEnum = {
+  id: 'id',
+  content: 'content',
+  userId: 'userId',
+  postId: 'postId',
+  createdAt: 'createdAt'
+} as const
+
+export type CommentScalarFieldEnum = (typeof CommentScalarFieldEnum)[keyof typeof CommentScalarFieldEnum]
 
 
 export const SortOrder = {

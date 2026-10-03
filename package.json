@@ -15,7 +15,9 @@
     "test:e2e": "playwright test",
     "test:headed": "playwright test --headed",
     "test:report": "playwright show-report",
-    "test:ui": "playwright test --ui"
+    "test:ui": "playwright test --ui",
+    "test:excel": "tsx scripts/generate-test-cases-excel.ts",
+    "seed:community": "tsx scripts/seed-community.ts"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
@@ -42,6 +44,7 @@
     "docx": "^9.7.1",
     "eslint": "^9",
     "eslint-config-next": "16.3.4",
+    "exceljs": "^4.4.0",
     "prisma": "^6.19.3",
     "tailwindcss": "^4",
     "tsx": "^4.23.13",

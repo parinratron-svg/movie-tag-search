@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/session";
 
-const MAX_SIZE_BYTES = 500 * 1024; // 500KB
+const MAX_SIZE_BYTES = 2.5 * 1024 * 1024; // 2.5MB (รองรับ GIF และรูปภาพคุณภาพสูง)
 
 export async function POST(request: Request) {
   const user = await getCurrentUser();
@@ -19,14 +19,14 @@ export async function POST(request: Request) {
 
   if (!file.type.startsWith("image/")) {
     return NextResponse.json(
-      { error: "รองรับเฉพาะไฟล์รูปภาพเท่านั้น" },
+      { error: "รองรับเฉพาะไฟล์รูปภาพ (PNG, JPG, GIF, WebP) เท่านั้น" },
       { status: 400 }
     );
   }
 
   if (file.size > MAX_SIZE_BYTES) {
     return NextResponse.json(
-      { error: "ไฟล์ใหญ่เกินไป (ไม่เกิน 500KB)" },
+      { error: "ขนาดไฟล์ใหญ่เกินไป (กรุณาใช้ไฟล์ขนาดไม่เกิน 2.5MB)" },
       { status: 400 }
     );
   }

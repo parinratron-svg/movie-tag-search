@@ -52,6 +52,14 @@ export default function ProviderFilterBar({ activeProvider }: Props) {
             </Link>
           );
         })}
+
+        <Link
+          href="/community"
+          className="ml-auto flex items-center gap-1.5 rounded-xl border border-[#E8A33D]/60 bg-[#E8A33D]/10 px-3.5 py-1.5 text-xs font-medium text-[#E8A33D] transition hover:border-[#E8A33D] hover:bg-[#E8A33D]/20 hover:shadow-lg hover:shadow-[#E8A33D]/10"
+        >
+          <span>👥</span>
+          <span>โซเชียลเบต้า</span>
+        </Link>
       </div>
     </div>
   );
